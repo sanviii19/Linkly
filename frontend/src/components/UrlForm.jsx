@@ -51,7 +51,7 @@ const UrlForm = () => {
         </form>
         
         {ShortUrl && (
-            <div className="mt-8 p-6 bg-linear-to-br from-gray-100 to-gray-200 rounded-xl animate-fade-in">
+            <div className="mt-8 p-6 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl animate-fade-in">
                 <p className="m-0 mb-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
                     Your shortened URL:
                 </p>
