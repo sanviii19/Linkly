@@ -19,5 +19,9 @@ export const saveShortUrlToDB = async (url, shortUrl, userId = null) => {
 }
 
 export const getShorturl = async (shortUrl) => {
-    return await ShortUrlModel.findOne({ short_url: shortUrl }, {$inc: {clicks: 1}});
+    return await ShortUrlModel.findOneAndUpdate(
+        { short_url: shortUrl },
+        { $inc: { clicks: 1 } },
+        { new: true }
+    );
 }

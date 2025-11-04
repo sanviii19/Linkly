@@ -24,6 +24,7 @@ const ShortUrlSchema = new Schema(
         }
     },
     {
+        timestamps: true,
         versionKey: false,
     }
 )

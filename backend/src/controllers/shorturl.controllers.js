@@ -11,9 +11,9 @@ export const createShortUrlController = wrapAsync (async (req, res) => {
 });
 
 export const redirectFromShortUrlController = wrapAsync (async (req, res) => {
-    console.log('----- inside redirectFromShortUrlController -----');
-
-    const {id} = req.params;
-    const url = await getShorturl(id);
-    res.redirect(url.full_url);
+        console.log('----- inside redirectFromShortUrlController -----');
+    
+        const {id} = req.params;
+        const url = await getShorturl(id);
+        res.redirect(url.full_url);
 })
