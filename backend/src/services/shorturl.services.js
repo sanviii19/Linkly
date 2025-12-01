@@ -1,4 +1,4 @@
-import { saveShortUrlToDB } from "../dao/shorturl.dao.js";
+import { getCustomShorturl, saveShortUrlToDB } from "../dao/shorturl.dao.js";
 import generateNanoId from "../utils/generateId.js";
 
 const createShortUrlWithoutUserService = async (url) => {
@@ -11,10 +11,13 @@ const createShortUrlWithoutUserService = async (url) => {
     return shortUrl;
 }
 
-const createShortUrlWithUserService = async (url, userId) => {
+const createShortUrlWithUserService = async (url, slug=null, userId) => {
     console.log('-----Creating short URL WITH user in service-----');
 
-    const shortUrl = generateNanoId(7);
+    const shortUrl = slug || generateNanoId(7);
+    const exist = await getCustomShorturl(shortUrl);
+    if (exist) throw new Error('Custom slug already exists');
+
     await saveShortUrlToDB(url, shortUrl, userId);
     return shortUrl;
 }
