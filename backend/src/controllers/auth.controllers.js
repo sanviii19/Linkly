@@ -13,7 +13,13 @@ const signupController = wrapAsync(async (req, res) => {
         {
             isSuccess: true,
             message: 'User registered successfully',
-            data: token,
+            data: {
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    _id: user._id,
+                }
+            },
         }
     )
 
@@ -30,10 +36,43 @@ const loginController = wrapAsync(async (req, res) => {
         {
             isSuccess: true,
             message: 'User logged in successfully',
-            data: token,
+            data: {
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    _id: user._id,
+                }
+            }
         }
     )
 
 });
 
-export { signupController, loginController };
+const logoutController = wrapAsync(async (req, res) => {
+    res.clearCookie('token', cookieOptions);
+    res.status(200).json(
+        {
+            isSuccess: true,
+            message: 'User logged out successfully',
+        }
+    );
+});
+
+const getCurrentUserController = wrapAsync(async (req, res) => {
+    const user = req.user;
+    res.status(200).json(
+        {
+            isSuccess: true,
+            message: 'Current user fetched successfully',
+            data: {
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    _id: user._id,
+                }
+            }
+        }
+    );
+});
+
+export { signupController, loginController, logoutController, getCurrentUserController };
