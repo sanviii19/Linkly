@@ -4,7 +4,7 @@ export const signToken = (payload) => {
     return jsonwebtoken.sign(
         payload, 
         process.env.JWT_SECRET, 
-        {expiresIn: '1d'}
+        {expiresIn: '5h'}
     )
 }
 

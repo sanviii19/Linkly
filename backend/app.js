@@ -7,6 +7,7 @@ import { errorHandler } from './src/utils/errorHandler.js';
 import cors from 'cors';
 import { AuthRoutes } from './src/routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
+import { UserRoutes } from './src/routes/user.routes.js';
 dotenv.config("./.env");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', AuthRoutes);
 app.use('/api/create', ShortUrlRouter);
+app.use('/api/user', UserRoutes);
 // GET - Redirect short URL
 app.get('/:id', redirectFromShortUrlController);
 app.use(errorHandler);

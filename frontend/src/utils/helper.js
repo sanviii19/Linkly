@@ -11,9 +11,9 @@ export const checkAuth = async ({ context }) => {
             queryFn: getCurrentUser,
         });
 
-        if(!user) return false;
+        if(!user || !user.data) return false;
 
-        store.dispatch(login(user));
+        store.dispatch(login(user.data.user));
         const {isAuthenticated} = store.getState().auth;
 
         if(!isAuthenticated) return false;
@@ -23,5 +23,22 @@ export const checkAuth = async ({ context }) => {
     } catch (error) {
         console.log(error)
         return redirect({to: "/auth",});
+    }
+};
+
+export const checkAuthSilent = async ({ context }) => {
+    try {
+        const { queryClient, store } = context;
+        const user = await queryClient.ensureQueryData({
+            queryKey: ["currentUser"],
+            queryFn: getCurrentUser,
+        });
+
+        if(user && user.data) {
+            store.dispatch(login(user.data.user));
+        }
+    } catch (error) {
+        // Silently fail - user is not authenticated
+        console.log("User not authenticated");
     }
 };

@@ -1,21 +1,31 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios';
 
 const UrlForm = () => {
     const [url, setUrl] = useState("https://www.google.com");
+    const [customSlug, setCustomSlug] = useState("");
     const [ShortUrl, setShortUrl] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, { url });
+            const payload = { url };
+            if (customSlug && customSlug.trim()) {
+                payload.slug = customSlug.trim();
+            }
+            const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, payload, {
+                withCredentials: true
+            });
             setShortUrl(data);
             console.log('Shortened URL:', data);
         } catch (error) {
             console.error('Error shortening URL:', error);
+            alert(error.response?.data?.message || 'Failed to shorten URL');
         } finally {
             setIsLoading(false);
         }
@@ -40,6 +50,16 @@ const UrlForm = () => {
                   placeholder="https://example.com"
                   required
                 />
+                {isAuthenticated && (
+                  <input
+                    type="text"
+                    id="customSlug"
+                    className="flex-1 min-w-[250px] px-5 py-4 text-base border-2 border-gray-300 rounded-xl outline-none transition-all duration-300 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 placeholder:text-gray-400"
+                    value={customSlug}
+                    onInput={(e) => setCustomSlug(e.target.value)}
+                    placeholder="Custom slug (optional)"
+                  />
+                )}
                 <button 
                   type="submit" 
                   className="px-8 py-4 text-base font-semibold text-white bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl cursor-pointer transition-all duration-300 whitespace-nowrap shadow-lg shadow-indigo-200 hover:transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-300 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:transform-none"
@@ -49,6 +69,8 @@ const UrlForm = () => {
                 </button>
             </div>
         </form>
+
+
         
         {ShortUrl && (
             <div className="mt-8 p-6 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl animate-fade-in">

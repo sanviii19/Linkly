@@ -1,8 +1,13 @@
 import React from 'react'
+import UrlForm from '../components/UrlForm'
+import UserUrls from '../components/UserUrls'
 
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
+    <div>
+      <UrlForm />
+      <UserUrls />
+    </div>
   )
 }
 

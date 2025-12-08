@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user.model.js';
+import ShortUrlModel from '../models/shorturlSchema.js';
 
 const findUserByEmail = async (email) => {
     // Logic to find a user by email in the database
@@ -21,4 +22,9 @@ const createUser = async (name, email, password) => {
     return newUser;
 }
 
-export { findUserByEmail, findUserById, createUser };
+const getAllUserUrls = async (id) => {
+    // Logic to get all URLs associated with a user
+    return await ShortUrlModel.find({ user: id }).sort({ createdAt: -1 });
+}
+
+export { findUserByEmail, findUserById, createUser, getAllUserUrls };

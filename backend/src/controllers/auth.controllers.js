@@ -49,7 +49,13 @@ const loginController = wrapAsync(async (req, res) => {
 });
 
 const logoutController = wrapAsync(async (req, res) => {
-    res.clearCookie('token', cookieOptions);
+    // Clear cookie with same options used to set it (except maxAge)
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/'
+    });
     res.status(200).json(
         {
             isSuccess: true,
