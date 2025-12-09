@@ -109,7 +109,7 @@ const NavBar = () => {
                   </Link>
                   <Link
                     to="/auth"
-                    search={{ mode: 'register' }}
+                    search={{ mode: 'signup' }}
                     className="relative px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 transition-all duration-200 hover:-translate-y-0.5 overflow-hidden group"
                   >
                     <span className="relative z-10">Sign Up</span>
@@ -185,7 +185,7 @@ const NavBar = () => {
                   </Link>
                   <Link
                     to="/auth"
-                    search={{ mode: 'register' }}
+                    search={{ mode: 'signup' }}
                     className="block px-4 py-3 text-center text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-semibold shadow-lg shadow-indigo-200 transition-all duration-200"
                     onClick={() => setMobileMenuOpen(false)}
                   >

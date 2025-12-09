@@ -19,6 +19,9 @@ const createUser = async (name, email, password) => {
         password,
     });
     await newUser.save();
+    
+    console.log("-----inside createUserDao-----");
+    
     return newUser;
 }
 

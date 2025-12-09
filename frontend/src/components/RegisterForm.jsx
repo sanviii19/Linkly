@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { RegisterUser } from '../api/User.api';
+import { useNavigate } from '@tanstack/react-router';
 
 const RegisterForm = ({ onSuccess, onToggleForm }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,6 +41,7 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
     try {
       const response = await RegisterUser(formData.name, formData.email, formData.password);
       if (onSuccess) onSuccess(response);
+      navigate({ to: '/dashboard' });
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed. Please try again.');
     } finally {

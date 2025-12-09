@@ -16,7 +16,7 @@ const AuthPage = () => {
       setLogin(isLogin);
       navigate({ 
         to: '/auth', 
-        search: { mode: isLogin ? 'login' : 'register' } 
+        search: { mode: isLogin ? 'login' : 'signup' } 
       });
     };
 

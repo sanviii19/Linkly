@@ -5,7 +5,7 @@ import wrapAsync from '../utils/tryCatchWrapper.js';
 const signupController = wrapAsync(async (req, res) => {
     // Signup logic here
     const { name, email, password } = req.body;
-    const token = await signupService(name, email, password);
+    const {token, user} = await signupService(name, email, password);
 
     req.user = user;
     res.cookie('token', token, cookieOptions);
