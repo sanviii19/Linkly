@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios';
+import { DotLoader } from 'react-spinners';
 
 const UrlForm = () => {
     const [url, setUrl] = useState("https://www.google.com");
@@ -62,10 +63,17 @@ const UrlForm = () => {
                 )}
                 <button 
                   type="submit" 
-                  className="px-8 py-4 text-base font-semibold text-white bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl cursor-pointer transition-all duration-300 whitespace-nowrap shadow-lg shadow-indigo-200 hover:transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-300 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:transform-none"
+                  className="px-8 py-4 text-base font-semibold text-white bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl cursor-pointer transition-all duration-300 whitespace-nowrap shadow-lg shadow-indigo-200 hover:transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-300 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:transform-none flex items-center justify-center gap-2"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Shortening...' : 'Shorten'}
+                  {isLoading ? (
+                    <>
+                      <DotLoader size={20} color="#ffffff" />
+                      <span>Shortening...</span>
+                    </>
+                  ) : (
+                    'Shorten'
+                  )}
                 </button>
             </div>
         </form>

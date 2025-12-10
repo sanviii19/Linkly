@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { DotLoader } from 'react-spinners';
 
 const UserUrls = () => {
   const [urls, setUrls] = useState([]);
@@ -45,8 +46,8 @@ const UserUrls = () => {
   if (isLoading) {
     return (
       <div className="w-full max-w-6xl mx-auto px-4 py-8">
-        <div className="text-center p-12">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        <div className="text-center p-12 flex flex-col items-center justify-center">
+          <DotLoader size={60} color="#4F46E5" />
           <p className="mt-4 text-gray-600">Loading your URLs...</p>
         </div>
       </div>
