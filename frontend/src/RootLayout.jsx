@@ -4,17 +4,23 @@ import LoginForm from './components/LoginForm'
 import AuthPage from './pages/AuthPage'
 import { Outlet, useLocation } from '@tanstack/react-router'
 import Navbar from './components/NavBar'
+import Footer from './components/Footer'
 
 const RootLayout = () => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/auth';
+  
+  // Pages where footer should not be displayed
+  const pagesWithoutFooter = ['/auth'];
+  const shouldShowFooter = !pagesWithoutFooter.includes(location.pathname);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-indigo-50">
+    <div className="min-h-screen flex flex-col">
       {!isAuthPage && <Navbar/>}
-      <main className={!isAuthPage ? "pt-24" : ""}>
+      <main className="flex-grow">
         <Outlet/>
       </main>
+      {shouldShowFooter && <Footer/>}
     </div>
   )
 }

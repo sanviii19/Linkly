@@ -47,52 +47,47 @@ const NavBar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'py-3' : 'py-5'
-    }`}>
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/10 border-b border-white/20 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`relative backdrop-blur-lg bg-white/80 border border-gray-200/50 rounded-2xl shadow-lg transition-all duration-300 ${
-          scrolled ? 'shadow-xl' : 'shadow-md'
-        }`}>
-          <div className="flex items-center justify-between px-6 py-4">
-            {/* Logo */}
-            <Link 
-              to="/" 
-              className="flex items-center space-x-2 group"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl shadow-lg">
-                  L
-                </div>
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <Link 
+            to="/" 
+            className="flex items-center space-x-2 group"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative bg-gradient-to-r from-gray-200 to-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-black text-xl shadow-lg" style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive' }}>
+                L
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Linkly
-              </span>
-            </Link>
+            </div>
+            <span className="text-4xl font-black text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,1)] transition-all duration-300 tracking-tight" style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive' }}>
+              Linkly
+            </span>
+          </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    className="px-4 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-200"
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-2">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="px-5 py-2 text-gray-800 hover:text-indigo-600 font-medium transition-all duration-300 hover:scale-105"
                   >
                     Dashboard
                   </Link>
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg">
-                      <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 px-4 py-2 bg-white/30 backdrop-blur-sm rounded-full border border-white/30">
+                      <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-lg">
                         {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
                       </div>
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-gray-800">
                         {user?.data?.user?.name || user?.name || 'User'}
                       </span>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="px-5 py-2.5 text-sm font-semibold text-gray-700 hover:text-red-600 border-2 border-gray-200 hover:border-red-300 rounded-xl transition-all duration-200 hover:shadow-md"
+                      className="px-5 py-2 text-sm font-semibold text-gray-800 hover:text-red-600 bg-white/30 backdrop-blur-sm border border-white/30 hover:border-red-400/50 rounded-full transition-all duration-300 hover:scale-105"
                     >
                       Logout
                     </button>
@@ -103,17 +98,17 @@ const NavBar = () => {
                   <Link
                     to="/auth"
                     search={{ mode: 'login' }}
-                    className="px-5 py-2.5 text-sm font-semibold text-gray-700 hover:text-indigo-600 border-2 border-gray-200 hover:border-indigo-300 rounded-xl transition-all duration-200 hover:shadow-md"
+                    className="px-6 py-2 text-sm font-semibold text-gray-800 hover:text-gray-200 bg-white/30 backdrop-blur-sm border border-white/30 hover:border-gray-300/50 rounded-full transition-all duration-300 hover:scale-105"
                   >
                     Login
                   </Link>
                   <Link
                     to="/auth"
                     search={{ mode: 'signup' }}
-                    className="relative px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 transition-all duration-200 hover:-translate-y-0.5 overflow-hidden group"
+                    className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden group"
                   >
                     <span className="relative z-10">Sign Up</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </Link>
                 </>
               )}
@@ -122,11 +117,11 @@ const NavBar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              className="md:hidden p-2 rounded-full hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
               aria-label="Toggle menu"
             >
               <svg
-                className="w-6 h-6 text-gray-700"
+                className="w-6 h-6 text-gray-800"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -145,20 +140,20 @@ const NavBar = () => {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-200/50 px-6 py-4 space-y-3 animate-fade-in">
+            <div className="md:hidden border-t border-white/20 px-6 py-4 space-y-2 backdrop-blur-md bg-white/10 animate-fade-in">
               {isAuthenticated ? (
                 <>
-                  <div className="flex items-center space-x-2 px-4 py-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg">
-                    <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  <div className="flex items-center space-x-2 px-4 py-3 bg-white/30 backdrop-blur-sm rounded-full border border-white/30">
+                    <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
                       {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
                     </div>
-                    <span className="font-medium text-gray-700">
+                    <span className="font-medium text-gray-800">
                       {user?.data?.user?.name || user?.name || 'User'}
                     </span>
                   </div>
                   <Link
                     to="/dashboard"
-                    className="block px-4 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg font-medium transition-colors duration-200"
+                    className="block px-4 py-3 text-gray-800 hover:bg-white/40 rounded-full font-medium transition-all duration-300"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Dashboard
@@ -168,7 +163,7 @@ const NavBar = () => {
                       handleLogout();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors duration-200"
+                    className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-100/50 rounded-full font-medium transition-all duration-300"
                   >
                     Logout
                   </button>
@@ -178,7 +173,7 @@ const NavBar = () => {
                   <Link
                     to="/auth"
                     search={{ mode: 'login' }}
-                    className="block px-4 py-3 text-center text-gray-700 hover:bg-gray-50 border-2 border-gray-200 rounded-xl font-semibold transition-colors duration-200"
+                    className="block px-4 py-3 text-center text-gray-800 hover:bg-white/40 backdrop-blur-sm border border-white/30 rounded-full font-semibold transition-all duration-300"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Login
@@ -186,7 +181,7 @@ const NavBar = () => {
                   <Link
                     to="/auth"
                     search={{ mode: 'signup' }}
-                    className="block px-4 py-3 text-center text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl font-semibold shadow-lg shadow-indigo-200 transition-all duration-200"
+                    className="block px-4 py-3 text-center text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-semibold shadow-lg transition-all duration-300"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign Up
@@ -196,8 +191,8 @@ const NavBar = () => {
             </div>
           )}
         </div>
-      </div>
-    </nav>
+      </nav>
+    
   );
 };
 

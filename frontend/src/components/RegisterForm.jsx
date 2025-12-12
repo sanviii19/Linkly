@@ -46,7 +46,18 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate({ to: '/' })}
+        className="absolute top-6 right-6 z-50 flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-gray-500 hover:text-indigo-600 bg-white/90 backdrop-blur-sm border-2 border-gray-200 hover:border-indigo-400 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back
+      </button>
+
       {/* Left Side - Welcome Section with Image */}
       <div className="hidden lg:flex lg:w-1/2 bg-linear-to-br from-indigo-900 via-purple-900 to-gray-800 items-center justify-center p-12 relative overflow-hidden">
         {/* Background decoration */}
@@ -68,11 +79,15 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
           
           <h1 className="text-4xl font-extrabold mb-6 leading-tight tracking-tight">
             <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-purple-200 to-indigo-200">
-              Join the Future of
+              Join
             </span>
             <br />
-            <span className="text-white text-5xl" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.02em' }}>
-              Link Management!
+            <span className="text-white text-6xl font-black drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", "Marker Felt", cursive', letterSpacing: '-0.02em' }}>
+              Linkly
+            </span>
+            <br />
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-purple-200 to-indigo-200 text-3xl">
+              Today!
             </span>
           </h1>
           
