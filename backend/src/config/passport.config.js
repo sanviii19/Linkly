@@ -36,10 +36,11 @@ passport.use(
             avatar: profile.photos[0]?.value,
             provider: 'google'
           });
-        } else if (!user.googleId) {
-          // Update existing local user with Google ID
+        } else {
+          // Update existing user's avatar and name on every login
           user.googleId = profile.id;
           user.avatar = profile.photos[0]?.value;
+          user.name = profile.displayName;
           await user.save();
         }
 

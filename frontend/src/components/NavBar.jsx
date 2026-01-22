@@ -78,9 +78,17 @@ const NavBar = () => {
                   </Link>
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-2 px-4 py-2 bg-white/30 backdrop-blur-sm rounded-full border border-white/30">
-                      <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-lg">
-                        {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
-                      </div>
+                      {(user?.data?.user?.avatar || user?.avatar) ? (
+                        <img 
+                          src={user?.data?.user?.avatar || user?.avatar} 
+                          alt="Profile"
+                          className="w-8 h-8 rounded-full shadow-lg object-cover"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+                          {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                      )}
                       <span className="text-sm font-medium text-gray-800">
                         {user?.data?.user?.name || user?.name || 'User'}
                       </span>
@@ -144,9 +152,17 @@ const NavBar = () => {
               {isAuthenticated ? (
                 <>
                   <div className="flex items-center space-x-2 px-4 py-3 bg-white/30 backdrop-blur-sm rounded-full border border-white/30">
-                    <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
-                      {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
-                    </div>
+                    {(user?.data?.user?.avatar || user?.avatar) ? (
+                      <img 
+                        src={user?.data?.user?.avatar || user?.avatar} 
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full shadow-lg object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
+                        {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                    )}
                     <span className="font-medium text-gray-800">
                       {user?.data?.user?.name || user?.name || 'User'}
                     </span>
