@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { RegisterUser } from '../api/User.api';
 import { useNavigate } from '@tanstack/react-router';
 import { DotLoader } from 'react-spinners';
+import GoogleAuthButton from './GoogleAuthButton';
 
 const RegisterForm = ({ onSuccess, onToggleForm }) => {
   const navigate = useNavigate();
@@ -125,10 +126,13 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
             </div>
           )}
 
+          {/* Google Auth Button */}
+          <GoogleAuthButton text="Sign up with Google" />
+
           {/* Divider with text */}
           <div className="flex items-center gap-4 my-8">
             <div className="flex-1 h-px bg-gray-300"></div>
-            <span className="text-sm text-gray-500 font-medium">continue with</span>
+            <span className="text-sm text-gray-500 font-medium">OR</span>
             <div className="flex-1 h-px bg-gray-300"></div>
           </div>
 

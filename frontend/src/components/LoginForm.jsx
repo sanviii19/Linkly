@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../store/slice/authSlice';
 import { useNavigate } from '@tanstack/react-router';
 import { DotLoader } from 'react-spinners';
+import GoogleAuthButton from './GoogleAuthButton';
 
 const LoginForm = ({ onSuccess, onToggleForm }) => {
   const [formData, setFormData] = useState({
@@ -120,10 +121,13 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
             </div>
           )}
 
+          {/* Google Auth Button */}
+          <GoogleAuthButton text="Log in with Google" />
+
           {/* Divider with text */}
           <div className="flex items-center gap-4 my-8">
             <div className="flex-1 h-px bg-gray-300"></div>
-            <span className="text-sm text-gray-500 font-medium">continue with</span>
+            <span className="text-sm text-gray-500 font-medium">OR</span>
             <div className="flex-1 h-px bg-gray-300"></div>
           </div>
 

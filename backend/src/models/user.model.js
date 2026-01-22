@@ -16,8 +16,21 @@ const UserSchema = new Schema(
         },
         password: {
             type: String,
-            required: true,
             minlength: 6,
+            select: false,
+        },
+        googleId: {
+          type: String,
+          unique: true,
+          sparse: true, // allows null but still unique
+        },
+        avatar: {
+          type: String,
+        },
+        provider: {
+          type: String,
+          enum: ['local', 'google'],
+          default: 'local',
         },
     },
     {
@@ -36,14 +49,13 @@ const ARGON2_OPTIONS = {
 // Hash password before saving user
 UserSchema.pre('save', async function (next) {
   // `this` = document being saved
-  if (!this.isModified('password')) {
+  if (!this.password || !this.isModified('password')) {
     // If password not changed, skip hashing
     return next();
   }
 
   try {
-    const hashed = await argon2.hash(this.password, ARGON2_OPTIONS);
-    this.password = hashed;
+    this.password = await argon2.hash(this.password, ARGON2_OPTIONS);
     next();
   } catch (err) {
     next(err);
@@ -52,6 +64,7 @@ UserSchema.pre('save', async function (next) {
 
 // Method to compare raw password with stored hash
 UserSchema.methods.comparePassword = async function (plainPassword) {
+  if(!this.password) return false;
   try {
     return await argon2.verify(this.password, plainPassword);
   } catch (err) {
@@ -63,3 +76,4 @@ UserSchema.methods.comparePassword = async function (plainPassword) {
 const UserModel = model('User', UserSchema)
 
 export { UserModel };
+export default UserModel;
