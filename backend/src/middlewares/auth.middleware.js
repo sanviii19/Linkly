@@ -7,16 +7,17 @@ export const authMiddleware = async (req, res, next) => {
     if(!token) {
         return res.status(401).json({
             isSuccess: false,
-            message: 'Unauthorized',
+            message: 'Unauthorized : token missing',
         });
     }
     try {
         const decoded = verifyToken(token);
         const user = await findUserById(decoded.id);
+        // console.log('----- user found in authMiddleware -----', user);
         if(!user) {
             return res.status(401).json({
                 isSuccess: false,
-                message: 'Unauthorized',
+                message: 'Unauthorized : user not found',
             });
         }
 

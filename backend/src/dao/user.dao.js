@@ -3,7 +3,7 @@ import ShortUrlModel from '../models/shorturlSchema.js';
 
 const findUserByEmail = async (email) => {
     // Logic to find a user by email in the database
-    return await UserModel.findOne({ email });
+    return await UserModel.findOne({ email }).select('+password');
 }
 
 const findUserById = async (id) => {

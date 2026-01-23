@@ -22,13 +22,18 @@ import jwt from "jsonwebtoken";
  * Sign JWT
  * Keep payload SMALL & SAFE
  */
-export const signToken = (user) => {
+export const signToken = (userOrPayload) => {
+  // Handle both user object and simple payload {id: userId}
+  const payload = userOrPayload.id 
+    ? { id: userOrPayload.id } // Simple payload from login service
+    : { // Full user object from Google auth
+        id: userOrPayload._id,
+        email: userOrPayload.email,
+        provider: userOrPayload.provider,
+      };
+  
   return jwt.sign(
-    {
-      id: user._id,
-      email: user.email,
-      provider: user.provider,
-    },
+    payload,
     process.env.JWT_SECRET,
     {
       expiresIn: "5h",
@@ -40,9 +45,6 @@ export const signToken = (user) => {
  * Verify JWT safely
  */
 export const verifyToken = (token) => {
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return null; // prevents server crash
-  }
+  console.log("token : ",token);
+  return jwt.verify(token, process.env.JWT_SECRET);
 };
