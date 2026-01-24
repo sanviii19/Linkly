@@ -51,106 +51,131 @@ const HomePage = () => {
       {/* Content */}
       <div className="relative z-10 pt-24 pb-20 px-4">
         {/* Hero Section */}
-        <div className="max-w-5xl mx-auto text-center mb-16">
-          <h1 className="text-6xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-            Shorten Your Links,
-            <br />
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400">
-              Expand Your Reach
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Transform long URLs into powerful, shareable links in seconds. Fast, reliable, and completely free.
-          </p>
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Text Content */}
+            <div className="space-y-8">
+              <h1 className="text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                Shorten Your Links,
+                <br />
+                <span className="bg-clip-text text-transparent bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400">
+                  Expand Your Reach
+                </span>
+              </h1>
+              <p className="text-l lg:text-xl text-white/80 leading-relaxed max-w-xl">
+                Transform long URLs into powerful, shareable links in seconds. Fast, reliable, and completely free.
+              </p>
+            </div>
 
-          {/* URL Shortener Form */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <form onSubmit={handleSubmit} className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-4 mb-4">
-                <input
-                  type="url"
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://your-long-url-here.com"
-                  className="flex-1 px-6 py-4 text-lg bg-white/90 backdrop-blur-sm border-2 border-transparent rounded-2xl outline-none transition-all duration-300 focus:border-violet-400 focus:ring-4 focus:ring-violet-400/20 placeholder:text-gray-500"
-                  required
-                />
-                {isAuthenticated && (
-                  <input
-                    type="text"
-                    value={customSlug}
-                    onChange={(e) => setCustomSlug(e.target.value)}
-                    placeholder="custom-slug (optional)"
-                    className="md:w-64 px-6 py-4 text-lg bg-white/90 backdrop-blur-sm border-2 border-transparent rounded-2xl outline-none transition-all duration-300 focus:border-violet-400 focus:ring-4 focus:ring-violet-400/20 placeholder:text-gray-500"
-                  />
-                )}
-              </div>
-              <button 
-                type="submit" 
-                disabled={isLoading}
-                className="w-full md:w-auto px-12 py-4 text-lg font-bold text-white bg-linear-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3 mx-auto"
-              >
-                {isLoading ? (
-                  <>
-                    <DotLoader size={24} color="#ffffff" />
-                    <span>Creating Magic...</span>
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* Right Side - URL Shortener Form */}
+            <div>
+              <form onSubmit={handleSubmit} className="bg-violet-100/95 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-violet-200/50 hover:bg-violet-200 transition-all transform hover:scale-101  duration-300">
+                {/* Heading */}
+                <div className="flex items-center gap-3 mb-8">
+                    <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
-                    Shorten URL
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Result */}
-            {shortUrl && (
-              <div className="mt-6 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-xl animate-fade-in">
-                <p className="text-sm font-semibold text-white/70 uppercase tracking-wide mb-3">
-                  Your shortened URL:
-                </p>
-                <div className="flex flex-col md:flex-row gap-3 items-center p-4 bg-white/90 rounded-xl">
-                  <a 
-                    href={shortUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex-1 text-indigo-600 font-semibold text-lg break-all hover:underline"
-                  >
-                    {shortUrl}
-                  </a>
+                  <h2 className="text-2xl font-bold text-gray-800">Shorten your link</h2>
+                </div>
+                
+                {/* URL Input with Button */}
+                <div className="mb-8">
+                  <input
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="Paste your long URL here..."
+                    className="w-full px-6 py-4 text-gray-800 bg-violet-100 border-2 border-violet-200 rounded-2xl outline-none transition-all duration-200 focus:border-violet-400 focus:bg-violet-100 focus:ring-4 focus:ring-violet-100 placeholder:text-gray-500 mb-4"
+                    required
+                  />
                   <button 
-                    onClick={handleCopy}
-                    className={`px-6 py-3 font-bold rounded-lg transition-all duration-300 whitespace-nowrap ${
-                      isCopied 
-                        ? 'bg-green-500 text-white scale-105' 
-                        : 'bg-violet-600 text-white hover:bg-violet-700 hover:scale-105'
-                    }`}
+                    type="submit" 
+                    disabled={isLoading}
+                    className="w-full px-8 py-4 text-lg font-bold text-white bg-violet-600 hover:bg-violet-700 rounded-2xl transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    {isCopied ? '✓ Copied!' : 'Copy Link'}
+                    {isLoading ? (
+                      <>
+                        <DotLoader size={20} color="#ffffff" />
+                      </>
+                    ) : (
+                      <>
+                        Shorten
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </>
+                    )}
                   </button>
                 </div>
-              </div>
-            )}
-          </div>
 
-          {!isAuthenticated && (
-            <p className="text-white/70 text-lg">
-              <button 
-                onClick={() => navigate({ to: '/auth', search: { mode: 'signup' } })}
-                className="text-violet-400 hover:text-violet-300 font-semibold underline"
-              >
-                Sign up
-              </button>
-              {' '}to create custom short links and track analytics
-            </p>
-          )}
+                {/* Short Link Result */}
+                {shortUrl && (
+                  <div className="bg-white/80 border-2 border-violet-200 rounded-2xl p-6 mb-6">
+                    <p className="text-gray-600 text-sm font-semibold mb-3 uppercase tracking-wide">
+                      Your Short Link:
+                    </p>
+                    <div className="flex items-center justify-between gap-4">
+                      <a 
+                        href={shortUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-violet-600 font-mono text-lg hover:underline break-all flex-1"
+                      >
+                        {shortUrl}
+                      </a>
+                      <button 
+                        onClick={handleCopy}
+                        type="button"
+                        className="px-4 py-2 text-sm font-semibold text-violet-600 bg-violet-100 hover:bg-violet-200 border border-violet-200 rounded-lg transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        {isCopied ? 'Copied!' : 'Copy'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Custom Slug (for authenticated users) */}
+                {isAuthenticated && (
+                  <div className="mb-6">
+                    <label className="text-sm font-semibold text-gray-700 mb-3 block">
+                      Custom Short Link (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={customSlug}
+                      onChange={(e) => setCustomSlug(e.target.value)}
+                      placeholder="my-custom-link"
+                      className="w-full px-6 py-4 text-gray-800 bg-white/80 border-2 border-violet-200 rounded-2xl outline-none transition-all duration-200 focus:border-violet-400 focus:bg-white focus:ring-4 focus:ring-violet-100 placeholder:text-gray-500"
+                    />
+                  </div>
+                )}
+
+                {/* Footer */}
+                {!isAuthenticated && (
+                  <div className="flex items-center gap-2 text-gray-600 text-sm pt-4">
+                    <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Want your own domain?</span>
+                    <button 
+                      type="button"
+                      onClick={() => navigate({ to: '/auth', search: { mode: 'signup' } })}
+                      className="text-violet-600 hover:text-violet-700 font-semibold transition-colors"
+                    >
+                      Create free account
+                    </button>
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
         </div>
 
         {/* Features Section */}
-        <div className="max-w-7xl mx-auto mt-24">
+        <div id="features" className="max-w-7xl mx-auto mt-24">
           <h2 className="text-5xl md:text-6xl font-extrabold text-white text-center mb-6 leading-tight">
             <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-violet-200 to-purple-200">
               Powerful Tools,

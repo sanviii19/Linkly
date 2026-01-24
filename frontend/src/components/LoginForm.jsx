@@ -49,7 +49,7 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
       {/* Back Button */}
       <button
         onClick={() => navigate({ to: '/' })}
-        className="absolute top-6 right-6 z-50 flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-gray-500 hover:text-indigo-600 bg-white/90 backdrop-blur-sm border-2 border-gray-200 hover:border-indigo-400 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+        className="absolute top-6 right-6 z-50 flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-gray-500 hover:text-indigo-600 bg-violet/90 backdrop-blur-sm border-2 border-gray-200 hover:border-indigo-400 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -98,11 +98,11 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
         
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-8 py-12">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-violet-100 px-8 py-12">
         <div className="w-full max-w-md">
           {/* Header */}
           <div className="mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Log In</h2>
+            <h2 className="text-4xl font-bold text-violet-950 mb-4">Log In</h2>
             <p className="text-gray-600 font-semibold text-xl">
               Don't have an account?{' '}
               <button
@@ -143,7 +143,7 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-gray-50"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-violet-50"
                 placeholder="Enter Email Address"
                 required
               />
@@ -161,7 +161,7 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-gray-50"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-violet-50"
                   placeholder="Enter Password"
                   required
                 />

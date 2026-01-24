@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* Custom animations for enhanced UI/UX */
-@keyframes fade-in {
+/* Custom animations for professional feel */
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -12,60 +12,93 @@
   }
 }
 
-@keyframes slide-in-up {
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.6;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
   }
-  50% {
+  to {
     opacity: 1;
+    transform: translateX(0);
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.animate-slide-in-up {
-  animation: slide-in-up 0.6s ease-out;
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+  animation-delay: 0.2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Delay utilities for background blobs */
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6366f1, #8b5cf6);
-  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #4f46e5, #7c3aed);
+  background: rgba(139, 92, 246, 0.5);
 }
 
-/* Improve text rendering */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
 }
