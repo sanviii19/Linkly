@@ -1,5 +1,6 @@
 import { getCustomShorturl, saveShortUrlToDB } from "../dao/shorturl.dao.js";
 import generateNanoId from "../utils/generateId.js";
+import generateQRCode from "../utils/generateQrCode.js";
 
 const createShortUrlWithoutUserService = async (url) => {
     console.log('-----Creating short URL WITHOUT user in service-----');
@@ -18,8 +19,13 @@ const createShortUrlWithUserService = async (url, slug=null, userId) => {
     const exist = await getCustomShorturl(shortUrl);
     if (exist) throw new Error('Custom slug already exists');
 
-    await saveShortUrlToDB(url, shortUrl, userId);
-    return shortUrl;
+    const fullShortUrl = process.env.BACKEND_URL + shortUrl;
+    const qrCode = await generateQRCode(fullShortUrl);
+
+    await saveShortUrlToDB(url, shortUrl, userId, qrCode);
+    return { shortUrl, qrCode };
 }
+
+
 
 export { createShortUrlWithoutUserService, createShortUrlWithUserService };

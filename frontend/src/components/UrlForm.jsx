@@ -7,6 +7,7 @@ const UrlForm = () => {
     const [url, setUrl] = useState("https://www.google.com");
     const [customSlug, setCustomSlug] = useState("");
     const [ShortUrl, setShortUrl] = useState("");
+    const [qrCode, setQrCode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -22,7 +23,18 @@ const UrlForm = () => {
             const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, payload, {
                 withCredentials: true
             });
-            setShortUrl(data);
+            
+            // Handle different response formats
+            if (typeof data === 'string') {
+                // Non-authenticated user: just the URL string
+                setShortUrl(data);
+                setQrCode("");
+            } else {
+                // Authenticated user: object with shortUrl and qrCode
+                setShortUrl(data.shortUrl);
+                setQrCode(data.qrCode || "");
+            }
+            
             console.log('Shortened URL:', data);
         } catch (error) {
             console.error('Error shortening URL:', error);
@@ -148,6 +160,23 @@ const UrlForm = () => {
                         )}
                     </button>
                 </div>
+                
+                {/* QR Code Display for Authenticated Users */}
+                {qrCode && isAuthenticated && (
+                    <div className="mt-6 flex flex-col items-center">
+                        <p className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">📱 Your QR Code</p>
+                        <div className="p-4 bg-white rounded-2xl border-2 border-indigo-300 shadow-lg">
+                            <img 
+                                src={qrCode} 
+                                alt="QR Code" 
+                                className="w-48 h-48 rounded-lg"
+                            />
+                        </div>
+                        <p className="mt-3 text-xs text-gray-500 text-center max-w-xs">
+                            Scan this QR code to access your shortened URL instantly!
+                        </p>
+                    </div>
+                )}
             </div>
         )}
     </div>

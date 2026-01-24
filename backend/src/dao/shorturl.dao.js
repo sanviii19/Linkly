@@ -1,7 +1,7 @@
 import ShortUrlModel from "../models/shorturlSchema.js"
 import { ConflictError } from "../utils/errorHandler.js";
 
-export const saveShortUrlToDB = async (url, shortUrl, userId = null) => {
+export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = null) => {
     try{
 
         const newShortUrl = new ShortUrlModel({
@@ -10,6 +10,10 @@ export const saveShortUrlToDB = async (url, shortUrl, userId = null) => {
         });
         if(userId) {
             newShortUrl.user = userId;
+        }
+        if(qrCode) {
+            newShortUrl.qrCode = qrCode;
+            newShortUrl.qrGenerated = true;
         }
         await newShortUrl.save();
     } catch (error) {

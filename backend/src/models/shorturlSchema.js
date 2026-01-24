@@ -18,6 +18,13 @@ const ShortUrlSchema = new Schema(
             required: true,
             default: 0,
         },
+        qrCode: {
+            type: String // base64 image
+        },
+        qrGenerated: {
+            type: Boolean,
+            default: false
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',

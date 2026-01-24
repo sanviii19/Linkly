@@ -45,6 +45,6 @@ export const signToken = (userOrPayload) => {
  * Verify JWT safely
  */
 export const verifyToken = (token) => {
-  console.log("token : ",token);
+  // console.log("token : ",token);
   return jwt.verify(token, process.env.JWT_SECRET);
 };

@@ -4,7 +4,6 @@ import wrapAsync from "../utils/tryCatchWrapper.js";
 
 export const createShortUrlController = wrapAsync (async (req, res) => {
     console.log('----- inside createShortUrlController -----');
-    let shortUrl;
     const {url, slug} = req.body;
     
     if (!url) {
@@ -12,11 +11,15 @@ export const createShortUrlController = wrapAsync (async (req, res) => {
     }
     
     if(req.user){
-        shortUrl = await createShortUrlWithUserService(url, slug, req.user._id);
+        const result = await createShortUrlWithUserService(url, slug, req.user._id);
+        return res.json({ 
+            shortUrl: process.env.BACKEND_URL + result.shortUrl, 
+            qrCode: result.qrCode 
+        });
     }else{
-        shortUrl = await createShortUrlWithoutUserService(url);
+        const shortUrl = await createShortUrlWithoutUserService(url);
+        return res.send(process.env.BACKEND_URL + shortUrl);
     }
-    return res.send(process.env.BACKEND_URL + shortUrl);
 });
 
 export const redirectFromShortUrlController = wrapAsync (async (req, res) => {
@@ -31,6 +34,9 @@ export const createCustomShortUrlController = wrapAsync (async (req, res) => {
     console.log('----- inside createCustomShortUrlController -----');
 
     const {url, slug} = req.body;
-    const shortUrl = await createShortUrlWithUserService(url, slug);
-    res.send(process.env.BACKEND_URL + shortUrl);
+    const result = await createShortUrlWithUserService(url, slug, req.user._id);
+    return res.json({ 
+        shortUrl: process.env.BACKEND_URL + result.shortUrl, 
+        qrCode: result.qrCode 
+    });
 })
