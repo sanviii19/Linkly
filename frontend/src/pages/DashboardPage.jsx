@@ -7,10 +7,39 @@ const DashboardPage = () => {
   const { user } = useSelector((state) => state.auth);
   const [stats, setStats] = useState({ totalLinks: 0, totalClicks: 0 });
 
+  // Typing effect state
+  const [typingIndex, setTypingIndex] = useState(0);
+
   const handleStatsUpdate = (newStats) => {
     setStats(newStats);
   };
 
+  // Determine greeting based on time
+  const hour = new Date().getHours();
+  let timeGreeting = 'Good Morning';
+  if (hour >= 12 && hour < 17) timeGreeting = 'Good Afternoon';
+  else if (hour >= 17 || hour < 5) timeGreeting = 'Good Evening';
+
+  const userName = user?.data?.user?.name || user?.name || 'Champion';
+  const fullGreeting = `${timeGreeting}, ${userName}!`;
+
+  useEffect(() => {
+    // Reset index when user changes to ensure animation restarts if needed
+    setTypingIndex(0);
+
+    const typeInterval = setInterval(() => {
+      setTypingIndex((prev) => {
+        if (prev < fullGreeting.length) {
+          return prev + 1;
+        } else {
+          clearInterval(typeInterval);
+          return prev;
+        }
+      });
+    }, 100);
+
+    return () => clearInterval(typeInterval);
+  }, [user, fullGreeting.length]); // Depend on length to handle greeting changes
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-950 to-gray-900 relative overflow-hidden">
@@ -28,15 +57,14 @@ const DashboardPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - Motivational Message */}
             <div className="space-y-8">
-              <h1 className="text-5xl lg:text-6xl font-extrabold text-white leading-tight">
-                Welcome back,
-                <br />
+              <h1 className="text-5xl lg:text-6xl font-extrabold text-white leading-tight min-h-[1.2em]">
                 <span className="bg-clip-text text-transparent bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400">
-                  {user?.data?.user?.name || user?.name || 'Champion'}!
+                  {fullGreeting.slice(0, typingIndex)}
+                  <span className="opacity-0">{fullGreeting.slice(typingIndex)}</span>
                 </span>
               </h1>
               <p className="text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl">
-                Ready to make an impact? Create powerful short links, track your success, and watch your reach grow. You're doing amazing! 🚀
+                Streamline your digital presence with our advanced URL shortening tools. Enhance your sharing capabilities and gain valuable insights with every link you create.
               </p>
 
               {/* Quick Stats */}
