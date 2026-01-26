@@ -5,6 +5,12 @@ import UserUrls from '../components/UserUrls'
 
 const DashboardPage = () => {
   const { user } = useSelector((state) => state.auth);
+  const [stats, setStats] = useState({ totalLinks: 0, totalClicks: 0 });
+
+  const handleStatsUpdate = (newStats) => {
+    setStats(newStats);
+  };
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-950 to-gray-900 relative overflow-hidden">
@@ -16,49 +22,84 @@ const DashboardPage = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 pt-24 pb-16 px-4">
-        {/* Header Section */}
-        <div className="max-w-6xl mx-auto mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-2">
-                Welcome back, <span className="bg-clip-text text-transparent bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400">{user?.data?.user?.name || user?.name || 'User'}</span>
-              </h1>
-              <p className="text-white/70 text-lg">
-                Manage and track your shortened links
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 bg-linear-to-br from-violet-600 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-xl shadow-violet-500/30 hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105">
-                <span className="text-xl font-semibold">
-                  {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
+      <div className="relative z-10 pt-24 pb-20 px-4">
+        {/* Hero Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Motivational Message */}
+            <div className="space-y-8">
+              <h1 className="text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                Welcome back,
+                <br />
+                <span className="bg-clip-text text-transparent bg-linear-to-r from-violet-400 via-purple-400 to-indigo-400">
+                  {user?.data?.user?.name || user?.name || 'Champion'}!
                 </span>
-              </div>
-            </div>
-          </div>
-        </div>
+              </h1>
+              <p className="text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl">
+                Ready to make an impact? Create powerful short links, track your success, and watch your reach grow. You're doing amazing! 🚀
+              </p>
 
-        {/* URL Shortener Section */}
-        <div className="max-w-6xl mx-auto mb-8">
-          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl hover:border-white/30 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-violet-500/20 rounded-2xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 gap-4 pt-4">
+                {/* Total Links */}
+                <div className="backdrop-blur-xl bg-gradient-to-br from-violet-900/30 to-purple-900/20 border border-violet-500/30 rounded-2xl p-5 hover:border-violet-400/50 transition-all duration-300 group">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-white/60 text-xs font-medium uppercase tracking-wide">Total Links</p>
+                  <p className="text-2xl font-bold text-white mt-1">{stats.totalLinks}</p>
+                </div>
+
+                {/* Total Clicks */}
+                <div className="backdrop-blur-xl bg-gradient-to-br from-emerald-900/30 to-teal-900/20 border border-emerald-500/30 rounded-2xl p-5 hover:border-emerald-400/50 transition-all duration-300 group">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-white/60 text-xs font-medium uppercase tracking-wide">Total Clicks</p>
+                  <p className="text-2xl font-bold text-white mt-1">{stats.totalClicks}</p>
+                </div>
               </div>
-              <h2 className="text-2xl font-bold text-white">
-                Create Short Link
-              </h2>
             </div>
-            <UrlForm />
+
+            {/* Right Side - URL Shortener Form */}
+            <div>
+              <div className="bg-violet-100/95 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-violet-200/50 hover:bg-violet-200 transition-all duration-300">
+                {/* Heading */}
+                <div className="flex items-center gap-3 mb-8">
+                  <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  <h2 className="text-2xl font-bold text-violet-900">Create Short Link</h2>
+                </div>
+
+                <UrlForm />
+              </div>
+            </div>
           </div>
         </div>
 
         {/* URLs List Section */}
         <div className="max-w-6xl mx-auto">
           <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl hover:border-white/30 transition-all duration-300">
-            <UserUrls />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-indigo-500/20 rounded-2xl flex items-center justify-center transition-transform duration-300 hover:-translate-y-1">
+                <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-white">
+                Your Links
+              </h2>
+            </div>
+            <UserUrls itemsPerPage={3} showExternalIcon="/urls" showStatsHeader={false} onStatsLoaded={handleStatsUpdate} />
           </div>
         </div>
       </div>
