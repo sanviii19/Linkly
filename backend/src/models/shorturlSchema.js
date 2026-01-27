@@ -25,6 +25,14 @@ const ShortUrlSchema = new Schema(
             type: Boolean,
             default: false
         },
+        expiresAt: {
+            type: Date,
+            default: null
+        },
+        isExpired: {
+            type: Boolean,
+            default: false
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',

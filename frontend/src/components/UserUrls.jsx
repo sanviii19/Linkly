@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { DotLoader } from 'react-spinners';
+import EditExpirationModal from './EditExpirationModal';
 
 const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader = true, onStatsLoaded }) => {
   const [urls, setUrls] = useState([]);
@@ -13,6 +14,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
   const [sortBy, setSortBy] = useState('recent'); // 'recent', 'clicks', 'alphabetical'
   const [expandedQrId, setExpandedQrId] = useState(null);
   const [shareMenuId, setShareMenuId] = useState(null); // ID of the URL whose share menu is open
+  const [editExpirationUrl, setEditExpirationUrl] = useState(null);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -341,6 +343,17 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                     {expandedQrId === url._id ? 'Hide QR' : 'Show QR'}
                   </button>
                 )}
+
+                <button
+                  onClick={() => setEditExpirationUrl(url)}
+                  className="flex-1 lg:flex-none px-5 py-2.5 text-sm font-semibold text-violet-600 bg-violet-100 hover:bg-violet-200 border border-violet-200 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 min-w-[120px]"
+                  title="Set Expiration"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {url.expiresAt ? 'Edit Expiry' : 'Set Expiry'}
+                </button>
               </div>
 
               {/* Share Menu & Actions */}
@@ -378,7 +391,24 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                     </button>
                   </div>
                 )}
+
               </div>
+              {/* Expiration Badge */}
+              {url.expiresAt && (
+                <div className="mt-3 lg:mt-0 lg:ml-4 flex items-center">
+                  {new Date(url.expiresAt) < new Date() ? (
+                    <span className="px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full border border-red-200 inline-flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      Expired
+                    </span>
+                  ) : (
+                    <span className="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200 inline-flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      Expires: {new Date(url.expiresAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  )}
+                </div>
+              )}
 
             </div>
 
@@ -467,19 +497,29 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
             </a>
           </div>
         )}
-      </div>
 
-      {
-        filteredAndSortedUrls.length === 0 && searchTerm && (
-          <div className="text-center p-10 bg-violet-100/95 backdrop-blur-lg rounded-3xl shadow-xl border border-violet-200/50">
-            <svg className="w-12 h-12 mx-auto mb-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <p className="text-gray-700 font-semibold">No links found matching "{searchTerm}"</p>
-          </div>
-        )
-      }
-    </div >
+        {
+          filteredAndSortedUrls.length === 0 && searchTerm && (
+            <div className="text-center p-10 bg-violet-100/95 backdrop-blur-lg rounded-3xl shadow-xl border border-violet-200/50">
+              <svg className="w-12 h-12 mx-auto mb-3 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <p className="text-gray-700 font-semibold">No links found matching "{searchTerm}"</p>
+            </div>
+          )
+        }
+
+        {editExpirationUrl && (
+          <EditExpirationModal
+            url={editExpirationUrl}
+            onClose={() => setEditExpirationUrl(null)}
+            onUpdate={(updatedUrl) => {
+              setUrls(prev => prev.map(u => u._id === updatedUrl._id ? updatedUrl : u));
+            }}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

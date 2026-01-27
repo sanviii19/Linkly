@@ -1,7 +1,7 @@
 import ShortUrlModel from "../models/shorturlSchema.js"
 import { ConflictError } from "../utils/errorHandler.js";
 
-export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = null) => {
+export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = null, expiresAt = null) => {
     try{
 
         const newShortUrl = new ShortUrlModel({
@@ -15,6 +15,9 @@ export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = nu
             newShortUrl.qrCode = qrCode;
             newShortUrl.qrGenerated = true;
         }
+        if(expiresAt) {
+            newShortUrl.expiresAt = expiresAt;
+        }
         await newShortUrl.save();
     } catch (error) {
         console.log(`----- Error inside saveShortUrlToDB DAO: ${error} -----`);
@@ -23,6 +26,24 @@ export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = nu
 }
 
 export const getShorturl = async (shortUrl) => {
+    const link = await ShortUrlModel.findOne({ short_url: shortUrl });
+    
+    if (!link) return null;
+    
+    // Check if link has expired
+    if (link.expiresAt && new Date() > link.expiresAt) {
+        // Mark as expired if not already marked
+        if (!link.isExpired) {
+            await ShortUrlModel.findOneAndUpdate(
+                { short_url: shortUrl },
+                { isExpired: true },
+                { new: true }
+            );
+        }
+        return null; // Return null for expired links
+    }
+    
+    // Increment clicks for valid, non-expired links
     return await ShortUrlModel.findOneAndUpdate(
         { short_url: shortUrl },
         { $inc: { clicks: 1 } },

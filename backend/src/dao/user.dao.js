@@ -19,9 +19,9 @@ const createUser = async (name, email, password) => {
         password,
     });
     await newUser.save();
-    
+
     console.log("-----inside createUserDao-----");
-    
+
     return newUser;
 }
 
@@ -30,4 +30,12 @@ const getAllUserUrls = async (id) => {
     return await ShortUrlModel.find({ user: id }).sort({ createdAt: -1 });
 }
 
-export { findUserByEmail, findUserById, createUser, getAllUserUrls };
+const updateUserUrl = async (userId, urlId, updateData) => {
+    return await ShortUrlModel.findOneAndUpdate(
+        { _id: urlId, user: userId },
+        updateData,
+        { new: true }
+    );
+}
+
+export { findUserByEmail, findUserById, createUser, getAllUserUrls, updateUserUrl };

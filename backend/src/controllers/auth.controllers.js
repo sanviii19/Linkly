@@ -21,6 +21,8 @@ const signupController = wrapAsync(async (req, res) => {
         email: user.email,
         name: user.name,
         _id: user._id,
+        avatar: user.avatar,
+        provider: user.provider,
       },
     },
   });
@@ -44,6 +46,8 @@ const loginController = wrapAsync(async (req, res) => {
         email: user.email,
         name: user.name,
         _id: user._id,
+        avatar: user.avatar,
+        provider: user.provider,
       },
     },
   });
