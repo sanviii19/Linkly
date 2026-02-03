@@ -29,6 +29,10 @@ const ShortUrlSchema = new Schema(
             type: Date,
             default: null
         },
+        activeFrom: {
+            type: Date,
+            default: Date.now,
+        },
         isExpired: {
             type: Boolean,
             default: false

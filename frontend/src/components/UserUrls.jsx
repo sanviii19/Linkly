@@ -409,66 +409,76 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                 )}
 
               </div>
-              {/* Expiration Badge */}
-              {url.expiresAt && (
-                <div className="mt-3 lg:mt-0 lg:ml-4 flex items-center">
-                  {new Date(url.expiresAt) < new Date() ? (
-                    <span className="px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full border border-red-200 inline-flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      Expired
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200 inline-flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      Expires: {new Date(url.expiresAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  )}
-                </div>
-              )}
+              {/* Status Badges */}
+              <div className="mt-3 lg:mt-0 lg:ml-4 flex flex-col gap-2 items-start lg:items-end">
+                {url.activeFrom && new Date(url.activeFrom) > new Date() && (
+                  <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full border border-blue-200 inline-flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Scheduled: {new Date(url.activeFrom).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                )}
 
+                {url.expiresAt && (
+                  <div className="flex items-center">
+                    {new Date(url.expiresAt) < new Date() ? (
+                      <span className="px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full border border-red-200 inline-flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Expired
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full border border-amber-200 inline-flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        Expires: {new Date(url.expiresAt).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+
+              {/* QR Code Display - Hidden by default */}
+              {
+                url.qrCode && expandedQrId === url._id && (
+                  <div className="mt-4 pt-4 border-t-2 border-violet-200 flex flex-col items-center">
+                    <div className="p-4 bg-white rounded-xl shadow-lg">
+                      <img
+                        src={url.qrCode}
+                        alt="QR Code"
+                        className="w-40 h-40 rounded"
+                      />
+                    </div>
+
+                    {/* QR Actions */}
+                    <div className="flex items-center gap-3 mt-4">
+                      <button
+                        onClick={() => downloadQrCode(url.qrCode, `qrcode-${url.short_url}.png`)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-violet-600 rounded-lg hover:bg-violet-700 transition-colors"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download PNG
+                      </button>
+                      <button
+                        onClick={() => shareQrCode(url.qrCode)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-violet-600 bg-violet-100 rounded-lg hover:bg-violet-200 transition-colors border border-violet-200"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        Share Image
+                      </button>
+                    </div>
+
+                    <p className="mt-3 text-sm text-gray-600 font-medium text-center">
+                      Scan to access your link
+                    </p>
+                  </div>
+                )
+              }
             </div>
-
-
-            {/* QR Code Display - Hidden by default */}
-            {
-              url.qrCode && expandedQrId === url._id && (
-                <div className="mt-4 pt-4 border-t-2 border-violet-200 flex flex-col items-center">
-                  <div className="p-4 bg-white rounded-xl shadow-lg">
-                    <img
-                      src={url.qrCode}
-                      alt="QR Code"
-                      className="w-40 h-40 rounded"
-                    />
-                  </div>
-
-                  {/* QR Actions */}
-                  <div className="flex items-center gap-3 mt-4">
-                    <button
-                      onClick={() => downloadQrCode(url.qrCode, `qrcode-${url.short_url}.png`)}
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-violet-600 rounded-lg hover:bg-violet-700 transition-colors"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Download PNG
-                    </button>
-                    <button
-                      onClick={() => shareQrCode(url.qrCode)}
-                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-violet-600 bg-violet-100 rounded-lg hover:bg-violet-200 transition-colors border border-violet-200"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                      </svg>
-                      Share Image
-                    </button>
-                  </div>
-
-                  <p className="mt-3 text-sm text-gray-600 font-medium text-center">
-                    Scan to access your link
-                  </p>
-                </div>
-              )
-            }
           </div>
         ))}
 

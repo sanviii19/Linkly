@@ -32,8 +32,8 @@ const ProtectedLinkPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4">
-            <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-300">
+        <div className="min-h-screen flex items-center justify-center bg-slate-900 p-4">
+            <div className="w-full max-w-md bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl shadow-purple-900/20 animate-in fade-in zoom-in-95 duration-300">
                 <div className="text-center mb-8">
                     <div className="w-16 h-16 mx-auto mb-4 bg-violet-500/20 rounded-2xl flex items-center justify-center border border-violet-500/30">
                         <svg className="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@ const ProtectedLinkPage = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter password..."
-                            className="w-full px-5 py-3.5 bg-black/20 border border-white/10 rounded-xl text-white outline-none focus:border-violet-500/50 focus:bg-black/30 transition-all placeholder:text-white/30"
+                            className="w-full px-5 py-3.5 bg-white/5 border border-violet-500/20 rounded-xl text-white outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 focus:bg-white/10 transition-all placeholder:text-white/40"
                             required
                         />
                     </div>
@@ -66,7 +66,7 @@ const ProtectedLinkPage = () => {
                     <button
                         type="submit"
                         disabled={isLoading || !password}
-                        className="w-full py-4 bg-violet-600 hover:bg-violet-700 text-white font-bold rounded-xl shadow-lg shadow-violet-600/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full py-4 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg shadow-violet-600/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-[1.02]"
                     >
                         {isLoading ? <DotLoader size={20} color="#ffffff" /> : (
                             <>

@@ -5,6 +5,7 @@ import { googleCallbackRoute } from "./googleCallback.route"
 import { urlsRoute } from "./urls.route"
 import { protectedLinkRoute } from "./protectedLink.route"
 import { rootRoute } from "./root.route"
+import { linkNotActiveRoute } from "./linkNotActive.route"
 
 // Root route definition is now in root.route.js
 
@@ -14,5 +15,6 @@ export const routeTree = rootRoute.addChildren([
     dasboardRoute,
     googleCallbackRoute,
     urlsRoute,
-    protectedLinkRoute
+    protectedLinkRoute,
+    linkNotActiveRoute
 ])

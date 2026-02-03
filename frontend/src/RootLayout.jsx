@@ -8,19 +8,18 @@ import Footer from './components/Footer'
 
 const RootLayout = () => {
   const location = useLocation();
-  const isAuthPage = location.pathname === '/auth';
   
-  // Pages where footer should not be displayed
-  const pagesWithoutFooter = ['/auth'];
-  const shouldShowFooter = !pagesWithoutFooter.includes(location.pathname);
+  // Pages where navbar and footer should not be displayed
+  const pagesWithoutLayout = ['/auth', '/protected', '/link-not-active'];
+  const shouldShowLayout = !pagesWithoutLayout.some(path => location.pathname.startsWith(path));
 
   return (
     <div className="min-h-screen flex flex-col">
-      {!isAuthPage && <Navbar/>}
+      {shouldShowLayout && <Navbar/>}
       <main className="flex-grow">
         <Outlet/>
       </main>
-      {shouldShowFooter && <Footer/>}
+      {shouldShowLayout && <Footer/>}
     </div>
   )
 }

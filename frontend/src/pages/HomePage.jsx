@@ -221,19 +221,19 @@ const HomePage = () => {
               </p>
             </div>
 
-            {/* Feature 3 - Team Collaboration */}
+            {/* Feature 3 - Schedule Link Activation */}
             <div className="backdrop-blur-xl bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border border-cyan-500/30 rounded-3xl p-8 hover:border-cyan-400/50 transition-all duration-300 group">
               <div className="w-14 h-14 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:-translate-y-2 group-hover:rotate-6">
                 <svg className="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-white group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-cyan-400 group-hover:to-blue-400 mb-4 relative inline-block transition-all duration-300">
-                Team Collaboration
+                Schedule Activation
                 <span className="absolute -bottom-1 left-0 w-0 h-1 bg-linear-to-r from-cyan-400 to-blue-400 rounded-full shadow-lg shadow-cyan-400/50 transition-all duration-300 group-hover:w-full"></span>
               </h3>
               <p className="text-white/60 text-base leading-relaxed">
-                Work together with your team, manage permissions, and share link analytics
+                Plan ahead by scheduling exactly when your links go live and start redirecting
               </p>
             </div>
 

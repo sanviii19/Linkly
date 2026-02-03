@@ -11,7 +11,10 @@ const UrlForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
+
   const [showCustomSlug, setShowCustomSlug] = useState(false);
+  const [showScheduleActivation, setShowScheduleActivation] = useState(false);
+  const [activeFrom, setActiveFrom] = useState("");
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const handleSubmit = async (e) => {
@@ -22,6 +25,9 @@ const UrlForm = () => {
       const payload = { url };
       if (customSlug && customSlug.trim()) {
         payload.slug = customSlug.trim();
+      }
+      if (activeFrom) {
+        payload.activeFrom = activeFrom;
       }
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, payload, {
         withCredentials: true
@@ -97,6 +103,47 @@ const UrlForm = () => {
                     placeholder="custom-alias"
                     className="w-full pl-8 pr-4 py-3 bg-white border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100/50 transition-all duration-300 font-medium text-gray-700 text-sm shadow-sm"
                   />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+
+
+        {/* Activation Time (Authenticated Only) */}
+        {isAuthenticated && (
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={() => setShowScheduleActivation(!showScheduleActivation)}
+              className="flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-800 transition-colors ml-1"
+            >
+              <svg className={`w-4 h-4 transition-transform duration-200 ${showScheduleActivation ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+              Schedule Activation (Optional)
+            </button>
+
+            {showScheduleActivation && (
+              <div className="animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="relative group">
+                  <label className="text-xs font-semibold text-gray-500 mb-1 block ml-1 uppercase tracking-wider">
+                    Activation Date
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="datetime-local"
+                      value={activeFrom}
+                      onChange={(e) => setActiveFrom(e.target.value)}
+                      className="w-full pl-12 pr-4 py-3 bg-white border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100/50 transition-all duration-300 font-medium text-gray-700 text-sm shadow-sm placeholder:text-gray-400"
+                    />
+                  </div>
                 </div>
               </div>
             )}

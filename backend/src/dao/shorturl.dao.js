@@ -1,7 +1,7 @@
 import ShortUrlModel from "../models/shorturlSchema.js"
 import { ConflictError } from "../utils/errorHandler.js";
 
-export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = null) => {
+export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = null, activeFrom = null) => {
     try {
 
         const newShortUrl = new ShortUrlModel({
@@ -14,6 +14,9 @@ export const saveShortUrlToDB = async (url, shortUrl, userId = null, qrCode = nu
         if (qrCode) {
             newShortUrl.qrCode = qrCode;
             newShortUrl.qrGenerated = true;
+        }
+        if (activeFrom) {
+            newShortUrl.activeFrom = activeFrom;
         }
         await newShortUrl.save();
     } catch (error) {
@@ -38,6 +41,11 @@ export const getShorturl = async (shortUrl) => {
             );
         }
         return null; // Return null for expired links
+    }
+
+    // Check if link is active yet
+    if (link.activeFrom && new Date() < link.activeFrom) {
+        return null; // Return null (404) if not yet active
     }
 
     // Increment clicks for valid, non-expired links
