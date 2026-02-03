@@ -1,4 +1,4 @@
-import { getAllUserUrls, updateUserUrl } from "../dao/user.dao.js";
+import { getAllUserUrls, updateUserUrl, deleteUserUrl } from "../dao/user.dao.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 import argon2 from "argon2";
 
@@ -49,5 +49,25 @@ export const updateUserUrlController = wrapAsync(async (req, res) => {
         isSuccess: true,
         message: 'URL updated successfully',
         data: updatedUrl
+    });
+});
+
+export const deleteUserUrlController = wrapAsync(async (req, res) => {
+    const { _id: userId } = req.user;
+    const { id: urlId } = req.params;
+
+    const deletedUrl = await deleteUserUrl(userId, urlId);
+
+    if (!deletedUrl) {
+        return res.status(404).json({
+            isSuccess: false,
+            message: 'URL not found or not authorized'
+        });
+    }
+
+    res.status(200).json({
+        isSuccess: true,
+        message: 'URL deleted successfully',
+        data: deletedUrl
     });
 });

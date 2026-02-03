@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { DotLoader } from 'react-spinners';
 import EditExpirationModal from './EditExpirationModal';
 import PasswordProtectionModal from './PasswordProtectionModal';
+import { deleteUrl } from '../api/User.api';
 
 const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader = true, onStatsLoaded }) => {
   const [urls, setUrls] = useState([]);
@@ -178,6 +179,27 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
         return;
     }
     window.open(shareLink, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleDeleteUrl = async (urlId) => {
+    if (!confirm('Are you sure you want to delete this link? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await deleteUrl(urlId);
+      setUrls(prev => prev.filter(url => url._id !== urlId));
+      
+      // Update stats if callback provided
+      if (onStatsLoaded) {
+        const updatedUrls = urls.filter(url => url._id !== urlId);
+        const totalClicks = updatedUrls.reduce((sum, url) => sum + url.clicks, 0);
+        onStatsLoaded({ totalLinks: updatedUrls.length, totalClicks });
+      }
+    } catch (error) {
+      console.error('Error deleting URL:', error);
+      alert(error.response?.data?.message || 'Failed to delete URL');
+    }
   };
 
   // Filter and sort URLs
@@ -369,6 +391,17 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   {url.isLinkPassword ? 'Protected' : 'Password'}
+                </button>
+
+                <button
+                  onClick={() => handleDeleteUrl(url._id)}
+                  className="flex-1 lg:flex-none px-5 py-2.5 text-sm font-semibold text-red-600 bg-red-100 hover:bg-red-200 border border-red-200 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 min-w-[120px]"
+                  title="Delete Link"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  Delete
                 </button>
               </div>
 

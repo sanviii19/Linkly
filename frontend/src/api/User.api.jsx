@@ -24,3 +24,8 @@ export const updateUrl = async (id, updateData) => {
     const { data } = await axiosInstance.put(`/api/user/urls/${id}`, updateData);
     return data;
 }
+
+export const deleteUrl = async (id) => {
+    const { data } = await axiosInstance.delete(`/api/user/urls/${id}`);
+    return data;
+}

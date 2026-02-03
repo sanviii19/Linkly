@@ -38,4 +38,10 @@ const updateUserUrl = async (userId, urlId, updateData) => {
     );
 }
 
-export { findUserByEmail, findUserById, createUser, getAllUserUrls, updateUserUrl };
+const deleteUserUrl = async (userId, urlId) => {
+    return await ShortUrlModel.findOneAndDelete(
+        { _id: urlId, user: userId }
+    );
+}
+
+export { findUserByEmail, findUserById, createUser, getAllUserUrls, updateUserUrl, deleteUserUrl };
