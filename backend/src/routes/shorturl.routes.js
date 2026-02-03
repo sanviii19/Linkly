@@ -7,4 +7,8 @@ const ShortUrlRouter = express.Router();
 // POST - create short URL (handles both regular and custom slug)
 ShortUrlRouter.post("/", optionalAuthMiddleware, createShortUrlController);
 
+// POST - verify password for protected link
+import { verifyShortUrlPasswordController } from '../controllers/shorturl.controllers.js';
+ShortUrlRouter.post("/verify", verifyShortUrlPasswordController);
+
 export default ShortUrlRouter;

@@ -12,7 +12,7 @@ const createShortUrlWithoutUserService = async (url) => {
     return shortUrl;
 }
 
-const createShortUrlWithUserService = async (url, slug = null, userId, expiresInDays = null, expiresAtDate = null) => {
+const createShortUrlWithUserService = async (url, slug = null, userId) => {
     console.log('-----Creating short URL WITH user in service-----');
 
     const shortUrl = slug || generateNanoId(7);
@@ -22,15 +22,7 @@ const createShortUrlWithUserService = async (url, slug = null, userId, expiresIn
     const fullShortUrl = process.env.BACKEND_URL + shortUrl;
     const qrCode = await generateQRCode(fullShortUrl);
 
-    let expiresAt = null;
-    if (expiresAtDate) {
-        expiresAt = new Date(expiresAtDate);
-    } else if (expiresInDays && expiresInDays > 0) {
-        expiresAt = new Date();
-        expiresAt.setDate(expiresAt.getDate() + parseInt(expiresInDays));
-    }
-
-    await saveShortUrlToDB(url, shortUrl, userId, qrCode, expiresAt);
+    await saveShortUrlToDB(url, shortUrl, userId, qrCode);
     return { shortUrl, qrCode };
 }
 

@@ -12,8 +12,6 @@ const UrlForm = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
   const [showCustomSlug, setShowCustomSlug] = useState(false);
-  const [expiresAt, setExpiresAt] = useState("");
-  const [showExpiration, setShowExpiration] = useState(false);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const handleSubmit = async (e) => {
@@ -24,9 +22,6 @@ const UrlForm = () => {
       const payload = { url };
       if (customSlug && customSlug.trim()) {
         payload.slug = customSlug.trim();
-      }
-      if (expiresAt) {
-        payload.expiresAt = expiresAt;
       }
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, payload, {
         withCredentials: true
@@ -108,38 +103,7 @@ const UrlForm = () => {
           </div>
         )}
 
-        {/* Expiration Date Toggle (Authenticated Only) */}
-        {isAuthenticated && (
-          <div className="space-y-3">
-            <button
-              type="button"
-              onClick={() => setShowExpiration(!showExpiration)}
-              className="flex items-center gap-2 text-sm font-semibold text-violet-600 hover:text-violet-800 transition-colors ml-1"
-            >
-              <svg className={`w-4 h-4 transition-transform duration-200 ${showExpiration ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              Set Expiration Date (Optional)
-            </button>
 
-            {showExpiration && (
-              <div className="animate-in fade-in slide-in-from-top-2 duration-200">
-                <div className="relative group">
-                  <input
-                    type="datetime-local"
-                    value={expiresAt}
-                    onChange={(e) => setExpiresAt(e.target.value)}
-                    min={new Date().toISOString().slice(0, 16)}
-                    className="w-full px-4 py-3 bg-white border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100/50 transition-all duration-300 font-medium text-gray-700 text-sm shadow-sm"
-                  />
-                  <p className="mt-1 text-xs text-gray-400 font-medium ml-1">
-                    Link will automatically expire on this date
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Submit Button */}
         <button

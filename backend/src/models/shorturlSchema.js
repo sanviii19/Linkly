@@ -33,6 +33,14 @@ const ShortUrlSchema = new Schema(
             type: Boolean,
             default: false
         },
+        linkPassword: {
+            type: String,
+            default: null
+        },
+        isLinkPassword: {
+            type: Boolean,
+            default: false
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',

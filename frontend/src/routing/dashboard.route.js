@@ -1,5 +1,5 @@
 import { createRoute } from "@tanstack/react-router"
-import { rootRoute } from "./routeTree"
+import { rootRoute } from "./root.route"
 import DashboardPage from "../pages/DashboardPage"
 import { checkAuth } from "../utils/helper"
 

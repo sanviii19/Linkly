@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { DotLoader } from 'react-spinners';
 import { updateUrl } from '../api/User.api';
 
@@ -7,6 +8,16 @@ const EditExpirationModal = ({ url, onClose, onUpdate }) => {
         url.expiresAt ? new Date(url.expiresAt).toISOString().slice(0, 16) : ''
     );
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        // Disable scroll when modal is open
+        document.body.style.overflow = 'hidden';
+
+        // Re-enable scroll when component unmounts
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -46,7 +57,7 @@ const EditExpirationModal = ({ url, onClose, onUpdate }) => {
         }
     }
 
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
                 <div className="p-6">
@@ -99,7 +110,8 @@ const EditExpirationModal = ({ url, onClose, onUpdate }) => {
                     </form>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
