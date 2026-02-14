@@ -12,6 +12,7 @@ import cors from 'cors';
 import { AuthRoutes } from './src/routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
 import { UserRoutes } from './src/routes/user.routes.js';
+import AnalyticsRouter from './src/routes/analytics.routes.js';
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use(cookieParser());
 app.use('/api/auth', AuthRoutes);
 app.use('/api/create', ShortUrlRouter);
 app.use('/api/user', UserRoutes);
+app.use("/api/analytics", AnalyticsRouter);
+
 // GET - Redirect short URL
 app.get('/:id', redirectFromShortUrlController);
 app.use(errorHandler);

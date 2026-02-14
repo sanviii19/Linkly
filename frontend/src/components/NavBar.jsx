@@ -65,12 +65,12 @@ const NavBar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
-            to="/"
+            to={isAuthenticated ? "/dashboard" : "/"}
             className="flex items-center gap-2 group"
           >
-            <img 
-              src="/logo2.png" 
-              alt="Linkly" 
+            <img
+              src="/logo2.png"
+              alt="Linkly"
               className="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
             />
           </Link>
@@ -172,16 +172,16 @@ const NavBar = () => {
                   className="relative text-white/70 hover:text-white font-medium transition-colors group"
                 >
                   Log In
-                  <svg 
+                  <svg
                     className="absolute -bottom-2 left-0 w-0 group-hover:w-full transition-all duration-300 overflow-visible"
-                    viewBox="0 0 100 8" 
+                    viewBox="0 0 100 8"
                     preserveAspectRatio="none"
                     style={{ height: '8px' }}
                   >
-                    <path 
-                      d="M0,4 Q5,1 10,4 T20,4 T30,4 T40,4 T50,4 T60,4 T70,4 T80,4 T90,4 T100,4" 
-                      fill="none" 
-                      stroke="url(#silverGradient)" 
+                    <path
+                      d="M0,4 Q5,1 10,4 T20,4 T30,4 T40,4 T50,4 T60,4 T70,4 T80,4 T90,4 T100,4"
+                      fill="none"
+                      stroke="url(#silverGradient)"
                       strokeWidth="2.5"
                       style={{
                         filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.9)) drop-shadow(0 0 15px rgba(255,255,255,0.6))'

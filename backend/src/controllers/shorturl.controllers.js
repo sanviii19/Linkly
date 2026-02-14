@@ -2,6 +2,8 @@ import { getShortUrlDoc, incrementClicks } from "../dao/shorturl.dao.js";
 import { createShortUrlWithoutUserService, createShortUrlWithUserService } from "../services/shorturl.services.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 import argon2 from "argon2";
+import ClickModel from "../models/clickSchema.js";
+import { getDeviceType } from "../utils/getDeviceType.js";
 
 export const createShortUrlController = wrapAsync(async (req, res) => {
     console.log('----- inside createShortUrlController -----');
@@ -59,6 +61,14 @@ export const redirectFromShortUrlController = wrapAsync(async (req, res) => {
     }
 
     await incrementClicks(id);
+
+    // Analytics
+    await ClickModel.create({
+        urlId: url._id,
+        ip: req.ip,
+        deviceType: getDeviceType(req.headers["user-agent"])
+    });
+
     res.redirect(url.full_url);
 })
 
