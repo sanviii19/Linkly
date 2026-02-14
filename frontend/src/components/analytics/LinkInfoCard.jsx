@@ -58,14 +58,14 @@ const LinkInfoCard = ({ link }) => {
                     <label className="text-xs text-gray-400 uppercase tracking-wider block mb-2">Status & Protection</label>
 
                     {/* Password Protection */}
-                    <div className={`flex items-center gap-3 p-3 rounded-lg border ${link.isLinkPassword
-                            ? 'bg-amber-500/10 border-amber-500/20 text-amber-200'
-                            : 'bg-white/5 border-white/5 text-gray-400'
+                    <div className={`flex items-center gap-3 p-3 rounded-lg border ${link.isPasswordProtected
+                        ? 'bg-amber-500/10 border-amber-500/20 text-amber-200'
+                        : 'bg-white/5 border-white/5 text-gray-400'
                         }`}>
-                        <Lock className={`w-5 h-5 ${link.isLinkPassword ? 'text-amber-400' : 'text-gray-500'}`} />
+                        <Lock className={`w-5 h-5 ${link.isPasswordProtected ? 'text-amber-400' : 'text-gray-500'}`} />
                         <div className="flex-1">
                             <p className="text-sm font-medium">
-                                {link.isLinkPassword ? 'Password Protected' : 'No Password Protection'}
+                                {link.isPasswordProtected ? 'Password Protected' : 'No Password Protection'}
                             </p>
                         </div>
                     </div>
@@ -73,8 +73,8 @@ const LinkInfoCard = ({ link }) => {
                     {/* Expiration Status */}
                     {link.expiresAt && (
                         <div className={`flex items-center gap-3 p-3 rounded-lg border ${isExpired
-                                ? 'bg-red-500/10 border-red-500/20 text-red-200'
-                                : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-200'
+                            ? 'bg-red-500/10 border-red-500/20 text-red-200'
+                            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-200'
                             }`}>
                             <AlertCircle className={`w-5 h-5 ${isExpired ? 'text-red-400' : 'text-emerald-400'}`} />
                             <div className="flex-1">
@@ -94,8 +94,8 @@ const LinkInfoCard = ({ link }) => {
                     {/* Scheduled Status */}
                     {link.activeFrom && (
                         <div className={`flex items-center gap-3 p-3 rounded-lg border ${isScheduled
-                                ? 'bg-blue-500/10 border-blue-500/20 text-blue-200'
-                                : 'bg-white/5 border-white/5 text-gray-400'
+                            ? 'bg-blue-500/10 border-blue-500/20 text-blue-200'
+                            : 'bg-white/5 border-white/5 text-gray-400'
                             }`}>
                             <Clock className={`w-5 h-5 ${isScheduled ? 'text-blue-400' : 'text-gray-500'}`} />
                             <div className="flex-1">
@@ -112,15 +112,7 @@ const LinkInfoCard = ({ link }) => {
                         </div>
                     )}
 
-                    {!link.expiresAt && !link.activeFrom && (
-                        <div className="flex items-center gap-3 p-3 rounded-lg border bg-emerald-500/10 border-emerald-500/20 text-emerald-200">
-                            <CheckCircle className="w-5 h-5 text-emerald-400" />
-                            <div>
-                                <p className="text-sm font-medium">Always Active</p>
-                                <p className="text-xs opacity-70">No restrictions</p>
-                            </div>
-                        </div>
-                    )}
+
                 </div>
 
                 <div className="text-xs text-gray-500 text-center pt-2">

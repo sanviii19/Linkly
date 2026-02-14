@@ -26,7 +26,8 @@ export const getLinkAnalyticsController = wrapAsync(async (req, res) => {
       totalClicks: url.totalClicks,
       isPasswordProtected: url.isLinkPassword,
       expiresAt: url.expiresAt,
-      activeFrom: url.activeFrom
+      activeFrom: url.activeFrom,
+      createdAt: url.createdAt
     },
     analytics
   });
