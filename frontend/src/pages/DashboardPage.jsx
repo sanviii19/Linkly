@@ -6,6 +6,7 @@ import UserUrls from '../components/UserUrls'
 const DashboardPage = () => {
   const { user } = useSelector((state) => state.auth);
   const [stats, setStats] = useState({ totalLinks: 0, totalClicks: 0 });
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Typing effect state
   const [typingIndex, setTypingIndex] = useState(0);
@@ -108,7 +109,7 @@ const DashboardPage = () => {
                   <h2 className="text-2xl font-bold text-violet-900">Create Short Link</h2>
                 </div>
 
-                <UrlForm />
+                <UrlForm onSuccess={() => setRefreshTrigger(prev => prev + 1)} />
               </div>
             </div>
           </div>
@@ -127,7 +128,7 @@ const DashboardPage = () => {
                 Your Links
               </h2>
             </div>
-            <UserUrls itemsPerPage={3} showExternalIcon="/urls" showStatsHeader={false} onStatsLoaded={handleStatsUpdate} />
+            <UserUrls itemsPerPage={3} showExternalIcon="/urls" showStatsHeader={false} onStatsLoaded={handleStatsUpdate} refreshTrigger={refreshTrigger} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import axios from 'axios';
 import { DotLoader } from 'react-spinners';
 
-const UrlForm = () => {
+const UrlForm = ({ onSuccess }) => {
   const [url, setUrl] = useState("https://www.google.com");
   const [customSlug, setCustomSlug] = useState("");
   const [ShortUrl, setShortUrl] = useState("");
@@ -42,6 +42,7 @@ const UrlForm = () => {
       }
 
       console.log('Shortened URL:', data);
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error shortening URL:', error);
       alert(error.response?.data?.message || 'Failed to shorten URL');

@@ -7,7 +7,7 @@ import EditExpirationModal from './EditExpirationModal';
 import PasswordProtectionModal from './PasswordProtectionModal';
 import { deleteUrl } from '../api/User.api';
 
-const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader = true, onStatsLoaded }) => {
+const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader = true, onStatsLoaded, refreshTrigger }) => {
   const navigate = useNavigate();
   const [urls, setUrls] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +49,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
     };
 
     fetchUrls();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, refreshTrigger]);
 
   if (!isAuthenticated) {
     return (
