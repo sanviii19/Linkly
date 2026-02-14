@@ -5,6 +5,7 @@ import axiosInstance from '../utils/axiosInstance';
 import { Globe, MousePointer2, ArrowLeft, Clock, Calendar } from 'lucide-react';
 import DailyClicksChart from '../components/Analytics/DailyClicksChart';
 import DeviceBreakdownChart from '../components/Analytics/DeviceBreakdownChart';
+import LinkInfoCard from '../components/Analytics/LinkInfoCard';
 import StatCard from '../components/Analytics/StatCard';
 import { BeatLoader } from 'react-spinners';
 
@@ -68,7 +69,6 @@ const AnalyticsPage = () => {
     const { link, analytics } = data;
 
     // Prepare data for Recharts
-    // Ensure dailyClicks has data so chart doesn't break
     const dailyClicksData = analytics.dailyClicks && analytics.dailyClicks.length > 0
         ? analytics.dailyClicks.map(item => ({
             _id: item._id, // Date string
@@ -76,8 +76,6 @@ const AnalyticsPage = () => {
         }))
         : [];
 
-    // Transform device data for Pie Chart
-    // Backend returns: object with _id (device type) and count
     const deviceData = analytics.deviceBreakdown && analytics.deviceBreakdown.length > 0
         ? analytics.deviceBreakdown.map(item => ({
             name: item._id || 'Unknown',
@@ -112,59 +110,41 @@ const AnalyticsPage = () => {
                             <span className="truncate max-w-md">{link.originalUrl}</span>
                         </div>
                     </div>
+                </div>
 
-                    <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-lg">
-                        <div className="text-right">
-                            <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Short Link</p>
-                            <a
-                                href={`${import.meta.env.VITE_BACKEND_URL}/${link.shortUrl}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-white font-mono font-medium hover:text-violet-300 transition"
-                            >
-                                /{link.shortUrl}
-                            </a>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left Column: Stats & Charts */}
+                    <div className="lg:col-span-2 space-y-8">
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <StatCard
+                                title="Total Clicks"
+                                value={analytics.totalClicks}
+                                icon={MousePointer2}
+                                colorClass="bg-violet-500"
+                            />
+                            <StatCard
+                                title="Unique Users"
+                                value={analytics.uniqueClicks}
+                                icon={Globe}
+                                colorClass="bg-blue-500"
+                            />
+                        </div>
+
+                        {/* Charts */}
+                        <div>
+                            <h3 className="text-xl font-semibold mb-4 text-white/90">Click Trends</h3>
+                            <DailyClicksChart data={dailyClicksData} />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-semibold mb-4 text-white/90">Devices</h3>
+                            <DeviceBreakdownChart data={deviceData} />
                         </div>
                     </div>
-                </div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                    <StatCard
-                        title="Total Clicks"
-                        value={analytics.totalClicks}
-                        icon={MousePointer2}
-                        colorClass="bg-violet-500"
-                    />
-                    <StatCard
-                        title="Unique Users"
-                        value={analytics.uniqueClicks}
-                        icon={Globe}
-                        colorClass="bg-blue-500"
-                    />
-                    <StatCard
-                        title="Active From"
-                        value={link.activeFrom ? new Date(link.activeFrom).toLocaleDateString() : 'Now'}
-                        icon={Clock}
-                        colorClass="bg-emerald-500"
-                    />
-                    <StatCard
-                        title="Expires At"
-                        value={link.expiresAt ? new Date(link.expiresAt).toLocaleDateString() : 'Never'}
-                        icon={Calendar}
-                        colorClass="bg-rose-500"
-                    />
-                </div>
-
-                {/* Charts Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
-                        <h3 className="text-xl font-semibold mb-4 text-white/90">Click Trends</h3>
-                        <DailyClicksChart data={dailyClicksData} />
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold mb-4 text-white/90">Devices</h3>
-                        <DeviceBreakdownChart data={deviceData} />
+                    {/* Right Column: Link Details */}
+                    <div className="lg:col-span-1">
+                        <LinkInfoCard link={link} />
                     </div>
                 </div>
             </div>
