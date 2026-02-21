@@ -39,9 +39,8 @@ export const redirectFromShortUrlController = wrapAsync(async (req, res) => {
 
     // Check if link has expired
     if (url.expiresAt && new Date() > new Date(url.expiresAt)) {
-        return res.status(410).json({
-            message: 'This link has expired'
-        });
+        const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+        return res.redirect(`${frontendUrl}/link-expired?expiredAt=${url.expiresAt.toISOString()}&shortUrl=${encodeURIComponent(url.short_url)}`);
     }
 
     // Check if link is active yet

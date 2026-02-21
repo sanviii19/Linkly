@@ -17,6 +17,42 @@ const UrlForm = ({ onSuccess }) => {
   const [activeFrom, setActiveFrom] = useState("");
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  const downloadQrCode = async (qrUrl, filename) => {
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading QR code:', error);
+    }
+  };
+
+  const shareQrCode = async (qrUrl) => {
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'QR Code',
+          text: 'Check out this QR code!',
+        });
+      } else {
+        alert('Sharing files is not supported on this browser.');
+      }
+    } catch (error) {
+      console.error('Error sharing QR code:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -239,6 +275,32 @@ const UrlForm = ({ onSuccess }) => {
                       <img src={qrCode} alt="QR Code" className="w-32 h-32 rounded-lg" />
                     </div>
                     <p className="mt-2 text-xs font-medium text-gray-500">Scan to visit</p>
+                    
+                    {/* QR Code Actions */}
+                    <div className="flex items-center gap-2 mt-3">
+                      <button
+                        onClick={() => downloadQrCode(qrCode, `qrcode-${customSlug || 'link'}.png`)}
+                        type="button"
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-violet-700 bg-violet-100/80 rounded-xl hover:bg-violet-200/80 transition-all border border-violet-200/70"
+                        title="Download QR Code"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download
+                      </button>
+                      <button
+                        onClick={() => shareQrCode(qrCode)}
+                        type="button"
+                        className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-violet-700 bg-violet-100/80 rounded-xl hover:bg-violet-200/80 transition-all border border-violet-200/70"
+                        title="Share QR Code"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        Share
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

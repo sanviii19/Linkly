@@ -10,7 +10,7 @@ const RootLayout = () => {
   const location = useLocation();
   
   // Pages where navbar and footer should not be displayed
-  const pagesWithoutLayout = ['/auth', '/protected', '/link-not-active'];
+  const pagesWithoutLayout = ['/auth', '/protected', '/link-not-active', '/link-expired'];
   const shouldShowLayout = !pagesWithoutLayout.some(path => location.pathname.startsWith(path));
 
   return (

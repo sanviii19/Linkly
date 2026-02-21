@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { DotLoader } from 'react-spinners';
-import { useParams } from '@tanstack/react-router';
+import { useParams, useNavigate } from '@tanstack/react-router';
 
 const ProtectedLinkPage = () => {
     const { shortUrl } = useParams({ from: '/protected/$shortUrl' });
+    const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,20 @@ const ProtectedLinkPage = () => {
             }
         } catch (err) {
             console.error(err);
+            
+            // Check if the link has expired (410 status code)
+            if (err.response?.status === 410) {
+                const expiredAt = new Date().toISOString();
+                navigate({ 
+                    to: '/link-expired', 
+                    search: { 
+                        expiredAt, 
+                        shortUrl 
+                    } 
+                });
+                return;
+            }
+            
             setError(err.response?.data?.message || 'Incorrect password or server error');
         } finally {
             setIsLoading(false);
