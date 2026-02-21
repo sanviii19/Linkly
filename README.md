@@ -2,8 +2,6 @@
 
 A modern, feature-rich URL shortening service built with the MERN stack. Linkly allows users to create short, shareable links with advanced features like password protection, expiration dates, QR code generation, and comprehensive analytics.
 
-![Linkly Banner](https://via.placeholder.com/1200x300?text=Linkly+-+URL+Shortener)
-
 ## Features
 
 ### Core Functionality
