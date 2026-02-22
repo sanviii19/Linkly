@@ -304,7 +304,7 @@ const HomePage = () => {
               <div className="flex flex-col gap-6 justify-center items-center">
                 <button
                   onClick={() => navigate({ to: '/auth', search: { mode: 'signup' } })}
-                  className="group px-10 py-4 text-lg font-bold text-white bg-linear-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 flex items-center gap-3"
+                  className="group px-10 py-4 text-lg font-bold text-white bg-violet-600 hover:bg-violet-700 rounded-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3"
                 >
                   <svg className="w-6 h-6 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
