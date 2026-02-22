@@ -16,7 +16,13 @@ export const LogoutUser = async () => {
 }
 
 export const getCurrentUser = async () => {
-    const { data } = await axiosInstance.get("/api/auth/me")
+    const { data } = await axiosInstance.get("/api/auth/me", {
+        headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+        }
+    })
     return data
 }
 

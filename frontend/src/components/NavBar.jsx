@@ -3,6 +3,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/slice/authSlice';
 import { LogoutUser } from '../api/User.api';
+import { queryClient } from '../main';
 
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -52,11 +53,12 @@ const NavBar = () => {
 
     // Always clear Redux state and navigate
     dispatch(logout());
+    queryClient.clear();
     setMobileMenuOpen(false);
     setProfileDropdownOpen(false);
 
-    // Force a page reload to ensure clean state
-    window.location.href = '/';
+    // Redirect to home page
+    navigate({ to: '/', replace: true });
   };
 
   return (

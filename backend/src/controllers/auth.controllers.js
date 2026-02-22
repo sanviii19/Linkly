@@ -91,6 +91,7 @@ const logoutController = wrapAsync(async (req, res) => {
 const getCurrentUserController = wrapAsync(async (req, res) => {
   const user = req.user;
 
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   res.status(200).json({
     isSuccess: true,
     message: 'Current user fetched successfully',
