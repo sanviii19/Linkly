@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, useLocation } from '@tanstack/react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../store/slice/authSlice';
 import { LogoutUser } from '../api/User.api';
@@ -10,8 +10,12 @@ const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  // Detect if on analytics page (light background)
+  const isLightPage = location.pathname.startsWith('/analytics');
 
   // Debug user data
   useEffect(() => {
@@ -62,7 +66,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-violet-950/90 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? (isLightPage ? 'bg-[#E5D9F2]/80 backdrop-blur-xl py-4 shadow-md shadow-[#A294F9]/10 border-b border-[#A294F9]/15' : 'bg-violet-950/90 backdrop-blur-md py-4') : (isLightPage ? 'bg-transparent py-6' : 'bg-transparent py-6')}`}>
       <div className="max-w-15xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -73,7 +77,7 @@ const NavBar = () => {
             <img
               src="/logo2.png"
               alt="Linkly"
-              className="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+              className={`h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300 ${isLightPage ? 'filter brightness-0' : ''}`}
             />
           </Link>
 
@@ -83,14 +87,14 @@ const NavBar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="text-white/80 hover:text-white font-medium transition-colors"
+                  className={`${isLightPage ? 'text-[#4C1D95] hover:text-[#A294F9] font-bold' : 'text-white/80 hover:text-white font-medium'} transition-colors`}
                 >
                   Dashboard
                 </Link>
                 <div className="relative profile-dropdown-container">
                   <button
                     onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                    className="flex items-center gap-3 pl-3 pr-2 py-1.5 rounded-full hover:bg-white/10 transition-all border border-transparent hover:border-white/10"
+                    className={`flex items-center gap-3 pl-3 pr-2 py-1.5 rounded-full transition-all border border-transparent ${isLightPage ? 'hover:bg-[#A294F9]/10 hover:border-[#A294F9]/20' : 'hover:bg-white/10 hover:border-white/10'}`}
                   >
                     {(user?.data?.user?.avatar || user?.avatar) ? (
                       <img
@@ -103,11 +107,11 @@ const NavBar = () => {
                         {(user?.data?.user?.name || user?.name)?.charAt(0).toUpperCase() || 'U'}
                       </div>
                     )}
-                    <span className="text-white font-medium text-sm">
+                    <span className={`${isLightPage ? 'text-[#4C1D95] font-bold' : 'text-white font-medium'} text-sm`}>
                       {user?.data?.user?.name || user?.name || 'User'}
                     </span>
                     <svg
-                      className={`w-4 h-4 text-white/60 transition-transform duration-300 ${profileDropdownOpen ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 ${isLightPage ? 'text-[#4C1D95]' : 'text-white/60'} transition-transform duration-300 ${profileDropdownOpen ? 'rotate-180' : ''}`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Lock, Clock, Calendar, AlertCircle, CheckCircle, ExternalLink, Copy } from 'lucide-react';
+import { Lock, Clock, Calendar, AlertCircle, CheckCircle, ExternalLink, Copy, Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { CardSpotlight } from '../ui/card-spotlight';
 
 const LinkInfoCard = ({ link }) => {
     const isExpired = link.expiresAt && new Date(link.expiresAt) < new Date();
@@ -16,108 +17,151 @@ const LinkInfoCard = ({ link }) => {
     };
 
     return (
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 shadow-xl h-full">
-            <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                <ExternalLink className="w-5 h-5 text-violet-400" />
-                Link Details
-            </h3>
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 w-full h-full">
+            {/* Card 1: Link Details */}
+            <div className="relative group w-full sm:mb-4 sm:mr-4 mb-3 mr-3 cursor-default flex-1">
+                {/* Bottom Card */}
+                <div className="absolute inset-0 bg-[#A294F9] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[16px] translate-y-[16px] group-hover:translate-x-[24px] group-hover:translate-y-[24px] shadow-sm" />
 
-            <div className="space-y-6">
-                {/* URLs Section */}
-                <div className="space-y-4">
-                    <div>
-                        <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Short Link</label>
-                        <div className="flex items-center gap-2 bg-black/20 p-3 rounded-lg border border-white/5 group relative">
-                            <span className="text-violet-300 font-mono text-sm truncate flex-1">
-                                {import.meta.env.VITE_BACKEND_URL}/{link.shortUrl}
-                            </span>
-                            <button
-                                onClick={copyToClipboard}
-                                className="p-1.5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
-                                title="Copy to clipboard"
-                            >
-                                <Copy className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
+                {/* Middle Card */}
+                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px]" />
 
-                    <div>
-                        <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Original Destination</label>
-                        <div className="bg-black/20 p-3 rounded-lg border border-white/5">
-                            <p className="text-gray-300 text-sm break-all line-clamp-2" title={link.originalUrl || link.full_url}>
-                                {link.originalUrl || link.full_url}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {/* Top Card */}
+                <CardSpotlight
+                    className="relative bg-white rounded-2xl p-6 lg:p-8 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[4px] group-hover:-translate-y-[4px] z-10"
+                    color="rgba(162, 148, 249, 0.25)"
+                >
+                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <ExternalLink className="w-6 h-6 text-[#A294F9]" />
+                        Link Details
+                    </h3>
 
-                <div className="h-px bg-white/10" />
+                    <div className="space-y-6 flex-1 flex flex-col">
+                        <div className="space-y-6">
+                            {/* Short Link */}
+                            <div>
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-[#A294F9]/30 bg-white text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all duration-300 ease-out w-full sm:w-fit group hover:rotate-1 hover:ring-4 hover:ring-[#CDC1FF]/40 origin-left cursor-text">
+                                    <span className="bg-[#A294F9] text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider leading-none uppercase sm:shrink-0">
+                                        SHORT LINK
+                                    </span>
+                                    <span className="text-[#A294F9] font-bold font-mono text-xs sm:text-sm truncate flex-1 min-w-[100px]">
+                                        {import.meta.env.VITE_BACKEND_URL}/{link.shortUrl}
+                                    </span>
+                                    <button
+                                        onClick={copyToClipboard}
+                                        className="p-1 hover:bg-[#F5EFFF] rounded-md transition-colors text-[#A294F9] hover:text-[#7C6DD8] active:scale-95 shrink-0 relative z-20 cursor-pointer pointer-events-auto"
+                                        title="Copy to clipboard"
+                                    >
+                                        <Copy className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
 
-                {/* Status Indicators */}
-                <div className="space-y-3">
-                    <label className="text-xs text-gray-400 uppercase tracking-wider block mb-2">Status & Protection</label>
-
-                    {/* Password Protection */}
-                    <div className={`flex items-center gap-3 p-3 rounded-lg border ${link.isPasswordProtected
-                        ? 'bg-amber-500/10 border-amber-500/20 text-amber-200'
-                        : 'bg-white/5 border-white/5 text-gray-400'
-                        }`}>
-                        <Lock className={`w-5 h-5 ${link.isPasswordProtected ? 'text-amber-400' : 'text-gray-500'}`} />
-                        <div className="flex-1">
-                            <p className="text-sm font-medium">
-                                {link.isPasswordProtected ? 'Password Protected' : 'No Password Protection'}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Expiration Status */}
-                    {link.expiresAt && (
-                        <div className={`flex items-center gap-3 p-3 rounded-lg border ${isExpired
-                            ? 'bg-red-500/10 border-red-500/20 text-red-200'
-                            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-200'
-                            }`}>
-                            <AlertCircle className={`w-5 h-5 ${isExpired ? 'text-red-400' : 'text-emerald-400'}`} />
-                            <div className="flex-1">
-                                <p className="text-sm font-medium">
-                                    {isExpired ? 'Expired' : 'Active'}
-                                </p>
-                                <p className="text-xs opacity-70">
-                                    {isExpired
-                                        ? `Expired on ${new Date(link.expiresAt).toLocaleDateString()}`
-                                        : `Expires on ${new Date(link.expiresAt).toLocaleDateString()}`
-                                    }
-                                </p>
+                            {/* Original Destination */}
+                            <div className="relative z-20 pointer-events-auto">
+                                <a
+                                    href={link.originalUrl || link.full_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-[#A294F9]/30 bg-white text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all duration-300 ease-out w-fit max-w-full group hover:-rotate-1 hover:ring-4 hover:ring-[#CDC1FF]/30 origin-left cursor-pointer"
+                                >
+                                    <span className="bg-[#CDC1FF] text-gray-900 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider leading-none uppercase shrink-0">
+                                        DESTINATION
+                                    </span>
+                                    <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[250px] pr-1">
+                                        {link.originalUrl || link.full_url}
+                                    </span>
+                                    <span className="text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform font-bold shrink-0">
+                                        ↗
+                                    </span>
+                                </a>
                             </div>
                         </div>
-                    )}
+                    </div>
+                </CardSpotlight>
+            </div>
 
-                    {/* Scheduled Status */}
-                    {link.activeFrom && (
-                        <div className={`flex items-center gap-3 p-3 rounded-lg border ${isScheduled
-                            ? 'bg-blue-500/10 border-blue-500/20 text-blue-200'
-                            : 'bg-white/5 border-white/5 text-gray-400'
-                            }`}>
-                            <Clock className={`w-5 h-5 ${isScheduled ? 'text-blue-400' : 'text-gray-500'}`} />
-                            <div className="flex-1">
-                                <p className="text-sm font-medium">
-                                    {isScheduled ? 'Scheduled' : 'Active'}
-                                </p>
-                                <p className="text-xs opacity-70">
-                                    {isScheduled
-                                        ? `Starts ${new Date(link.activeFrom).toLocaleString()}`
-                                        : `Active since ${new Date(link.activeFrom).toLocaleDateString()}`
-                                    }
-                                </p>
+            {/* Card 2: Status & Protection */}
+            <div className="relative group w-full sm:mb-4 sm:mr-4 mb-3 mr-3 cursor-default flex-1">
+                {/* Bottom Card */}
+                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[16px] translate-y-[16px] group-hover:translate-x-[24px] group-hover:translate-y-[24px] shadow-sm" />
+
+                {/* Middle Card */}
+                <div className="absolute inset-0 bg-[#E5D9F2] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px]" />
+
+                {/* Top Card */}
+                <CardSpotlight
+                    className="relative bg-white rounded-2xl p-6 lg:p-8 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[4px] group-hover:-translate-y-[4px] z-10"
+                    color="rgba(205, 193, 255, 0.3)"
+                >
+                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <Shield className="w-6 h-6 text-[#A294F9]" />
+                        Status & Details
+                    </h3>
+
+                    <div className="space-y-6 flex-1 flex flex-col relative z-20 pointer-events-auto">
+                        <div className="space-y-3">
+                            {/* Password Protection */}
+                            <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${link.isPasswordProtected
+                                ? 'bg-amber-50 border-amber-200 text-amber-800'
+                                : 'bg-white border-gray-200 text-gray-700'
+                                }`}>
+                                <Lock className={`w-5 h-5 ${link.isPasswordProtected ? 'text-amber-500' : 'text-gray-400'}`} />
+                                <div className="flex-1">
+                                    <p className="text-sm font-bold">
+                                        {link.isPasswordProtected ? 'Password Protected' : 'No Password Protection'}
+                                    </p>
+                                </div>
                             </div>
+
+                            {/* Expiration Status */}
+                            {link.expiresAt && (
+                                <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${isExpired
+                                    ? 'bg-red-50 border-red-200 text-red-800'
+                                    : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                                    }`}>
+                                    <AlertCircle className={`w-5 h-5 ${isExpired ? 'text-red-500' : 'text-emerald-500'}`} />
+                                    <div className="flex-1">
+                                        <p className="text-sm font-bold">
+                                            {isExpired ? 'Expired' : 'Active'}
+                                        </p>
+                                        <p className="text-xs font-medium opacity-80 mt-0.5">
+                                            {isExpired
+                                                ? `Expired on ${new Date(link.expiresAt).toLocaleDateString()}`
+                                                : `Expires on ${new Date(link.expiresAt).toLocaleDateString()}`
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Scheduled Status */}
+                            {link.activeFrom && (
+                                <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${isScheduled
+                                    ? 'bg-blue-50 border-blue-200 text-blue-800'
+                                    : 'bg-white border-gray-200 text-gray-700'
+                                    }`}>
+                                    <Clock className={`w-5 h-5 ${isScheduled ? 'text-blue-500' : 'text-gray-400'}`} />
+                                    <div className="flex-1">
+                                        <p className="text-sm font-bold">
+                                            {isScheduled ? 'Scheduled' : 'Active'}
+                                        </p>
+                                        <p className="text-xs font-medium opacity-80 mt-0.5">
+                                            {isScheduled
+                                                ? `Starts ${new Date(link.activeFrom).toLocaleString()}`
+                                                : `Active since ${new Date(link.activeFrom).toLocaleDateString()}`
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
 
-
-                </div>
-
-                <div className="text-xs text-gray-500 text-center pt-2">
-                    Created on {new Date(link.createdAt).toLocaleDateString()}
-                </div>
+                        <div className="text-xs font-bold text-gray-400 text-center pt-4 mt-auto">
+                            Created on {new Date(link.createdAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                </CardSpotlight>
             </div>
         </div>
     );
