@@ -7,7 +7,9 @@ import DailyClicksChart from '../components/Analytics/DailyClicksChart';
 import DeviceBreakdownChart from '../components/Analytics/DeviceBreakdownChart';
 import LinkInfoCard from '../components/Analytics/LinkInfoCard';
 import StatCard from '../components/Analytics/StatCard';
+import InfiniteMarquee from '../components/Analytics/InfiniteMarquee';
 import { BeatLoader } from 'react-spinners';
+import { motion } from 'framer-motion';
 
 const AnalyticsPage = () => {
     const { slug } = useParams({ from: '/analytics/$slug' });
@@ -18,6 +20,8 @@ const AnalyticsPage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         const fetchAnalytics = async () => {
             if (!isAuthenticated) return;
 
@@ -43,23 +47,25 @@ const AnalyticsPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-                <BeatLoader color="#8b5cf6" size={15} />
+            <div className="min-h-screen bg-[#F5EFFF] flex items-center justify-center bg-[radial-gradient(#CDC1FF_1px,transparent_1px)] [background-size:24px_24px]">
+                <BeatLoader color="#A294F9" size={20} margin={5} />
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white">
-                <h2 className="text-2xl font-bold mb-4 text-red-500">Error</h2>
-                <p className="text-gray-400 mb-6">{error}</p>
-                <button
-                    onClick={() => navigate({ to: '/dashboard' })}
-                    className="px-6 py-2 bg-violet-600 rounded-lg hover:bg-violet-700 transition font-medium"
-                >
-                    Back to Dashboard
-                </button>
+            <div className="min-h-screen bg-[#F5EFFF] flex flex-col items-center justify-center text-gray-900 bg-[radial-gradient(#CDC1FF_1px,transparent_1px)] [background-size:24px_24px]">
+                <div className="bg-white p-8 rounded-3xl border-4 border-[#A294F9] shadow-[8px_8px_0px_0px_rgba(162,148,249,0.5)] flex flex-col items-center">
+                    <h2 className="text-3xl font-black mb-4 text-[#A294F9] uppercase tracking-wider">Error</h2>
+                    <p className="text-gray-900 font-bold mb-8 text-center">{error}</p>
+                    <button
+                        onClick={() => navigate({ to: '/dashboard' })}
+                        className="px-8 py-3 bg-[#CDC1FF] border-2 border-[#A294F9] shadow-[4px_4px_0px_0px_rgba(162,148,249,0.5)] rounded-xl hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.5)] active:translate-y-0 active:translate-x-0 active:shadow-none transition-all font-black uppercase text-gray-900 tracking-wider"
+                    >
+                        Back to Dashboard
+                    </button>
+                </div>
             </div>
         );
     }
@@ -83,71 +89,120 @@ const AnalyticsPage = () => {
         }))
         : [{ name: 'No Data', value: 1 }];
 
+    // Framer Motion Variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 24
+            }
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-950 p-6 md:p-12 font-sans relative overflow-hidden text-white">
-            {/* Background decorations */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none">
-                <div className="absolute top-20 left-20 w-96 h-96 bg-violet-500 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-            </div>
-
-            <div className="relative z-10 max-w-7xl mx-auto">
-                <button
-                    onClick={() => navigate({ to: '/dashboard' })}
-                    className="flex items-center text-gray-400 hover:text-white mb-8 transition group"
-                >
-                    <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Back to Dashboard
-                </button>
-
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <div className="min-h-screen bg-[#F5EFFF] p-6 pt-32 md:p-12 md:pt-32 font-sans relative overflow-hidden text-gray-900 bg-[radial-gradient(#CDC1FF_1px,transparent_1px)] [background-size:24px_24px]">
+            <motion.div
+                className="relative z-10 max-w-[1400px] mx-auto"
+                variants={containerVariants}
+                initial="hidden"
+                animate="show"
+            >
+                {/* Header Section */}
+                <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                     <div>
-                        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 mb-2">
-                            Analytics Dashboard
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-4 cursor-default uppercase tracking-tight flex flex-wrap items-center gap-3 md:gap-4">
+                            <span className="bg-[#A294F9] text-white px-5 py-2 border-4 border-[#7C6DD8] rounded-xl shadow-[6px_6px_0px_0px_rgba(162,148,249,0.6)] -rotate-2 inline-block hover:rotate-2 hover:scale-105 transition-all duration-300">
+                                Analytics
+                            </span>
+                            <span className="px-1 relative">
+                                Dashboard
+                                {/* Decorative underline */}
+                                <svg className="absolute -bottom-2 left-0 w-full h-4 text-[#CDC1FF]" viewBox="0 0 100 20" preserveAspectRatio="none">
+                                    <path d="M0 10 Q 50 20 100 10" stroke="currentColor" strokeWidth="5" fill="none" />
+                                </svg>
+                            </span>
                         </h1>
-                        <div className="flex items-center gap-2 text-violet-300/80">
-                            <Globe className="w-4 h-4" />
-                            <span className="truncate max-w-md">{link.originalUrl}</span>
-                        </div>
+                        <a
+                            href={link.originalUrl || link.full_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-[#A294F9] bg-white text-sm md:text-base font-bold text-gray-900 shadow-[4px_4px_0px_0px_rgba(162,148,249,0.4)] hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.4)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all duration-300 ease-out w-fit mt-5 group hover:-rotate-1 hover:ring-4 hover:ring-[#CDC1FF]/40 origin-left"
+                        >
+                            <span className="bg-[#A294F9] text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-black tracking-widest leading-none uppercase hidden sm:block">
+                                DESTINATION
+                            </span>
+                            <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-md pr-1">
+                                {link.originalUrl || link.full_url}
+                            </span>
+                            <span className="text-[#A294F9] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform font-black">
+                                ↗
+                            </span>
+                        </a>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Left Column: Stats & Charts */}
-                    <div className="lg:col-span-2 space-y-8">
-                        {/* Stats Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* Main Dashboard Grid */}
+                <div className="flex flex-col gap-8 lg:gap-10">
+
+                    {/* Stats Row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+                        <motion.div variants={itemVariants} className="h-full">
                             <StatCard
                                 title="Total Clicks"
                                 value={analytics.totalClicks}
                                 icon={MousePointer2}
-                                colorClass="bg-violet-500"
+                                colorClass="bg-[#CDC1FF] text-gray-900"
+                                shadowColorClass="bg-[#A294F9]"
                             />
+                        </motion.div>
+                        <motion.div variants={itemVariants} className="h-full">
                             <StatCard
                                 title="Unique Users"
                                 value={analytics.uniqueClicks}
                                 icon={Globe}
-                                colorClass="bg-blue-500"
+                                colorClass="bg-[#E5D9F2] text-gray-900"
+                                shadowColorClass="bg-[#CDC1FF]"
                             />
-                        </div>
-
-                        {/* Charts */}
-                        <div>
-                            <h3 className="text-xl font-semibold mb-4 text-white/90">Click Trends</h3>
-                            <DailyClicksChart data={dailyClicksData} />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-semibold mb-4 text-white/90">Devices</h3>
-                            <DeviceBreakdownChart data={deviceData} />
-                        </div>
+                        </motion.div>
                     </div>
 
-                    {/* Right Column: Link Details */}
-                    <div className="lg:col-span-1">
+                    {/* Link Info Card Row */}
+                    <motion.div variants={itemVariants} className="w-full">
                         <LinkInfoCard link={link} />
+                    </motion.div>
+
+                    {/* Charts Row: Trend Chart + Devices */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+                        {/* Large Trend Chart */}
+                        <motion.div variants={itemVariants} className="lg:col-span-8 h-[350px] sm:h-[400px]">
+                            <DailyClicksChart data={dailyClicksData} />
+                        </motion.div>
+
+                        {/* Device Pie Chart */}
+                        <motion.div variants={itemVariants} className="lg:col-span-4 h-[350px] sm:h-[400px]">
+                            <DeviceBreakdownChart data={deviceData} />
+                        </motion.div>
                     </div>
+
+                    {/* Infinite Scrolling Marquee */}
+                    <motion.div variants={itemVariants} className="w-full pb-10">
+                        <InfiniteMarquee />
+                    </motion.div>
+
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
