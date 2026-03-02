@@ -4,6 +4,7 @@ import wrapAsync from "../utils/tryCatchWrapper.js";
 
 export const getLinkAnalyticsController = wrapAsync(async (req, res) => {
   const { slug } = req.params;
+  const { startDate, endDate } = req.query;
   const userId = req.user._id;
 
   const url = await ShortUrl.findOne({ short_url: slug });
@@ -17,7 +18,7 @@ export const getLinkAnalyticsController = wrapAsync(async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  const analytics = await getAnalyticsForLink(url._id);
+  const analytics = await getAnalyticsForLink(url._id, startDate, endDate);
 
   res.status(200).json({
     link: {

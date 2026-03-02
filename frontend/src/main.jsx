@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client'
+import '@fontsource/caveat'
 import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
@@ -9,7 +10,7 @@ import { Provider } from 'react-redux'
 export const queryClient = new QueryClient()
 const router = createRouter({
   routeTree,
-  context:{
+  context: {
     queryClient,
     store
   }

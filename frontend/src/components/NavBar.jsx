@@ -5,6 +5,39 @@ import { logout } from '../store/slice/authSlice';
 import { LogoutUser } from '../api/User.api';
 import { queryClient } from '../main';
 
+const WavyUnderline = ({ isActive, isLightPage }) => (
+  <svg
+    className={`absolute -bottom-2 left-0 transition-all duration-300 overflow-visible ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`}
+    viewBox="0 0 100 8"
+    preserveAspectRatio="none"
+    style={{ height: '8px' }}
+  >
+    <path
+      d="M0,4 Q5,1 10,4 T20,4 T30,4 T40,4 T50,4 T60,4 T70,4 T80,4 T90,4 T100,4"
+      fill="none"
+      stroke={isLightPage ? "url(#purpleGradient)" : "url(#silverGradient)"}
+      strokeWidth="2.5"
+      style={{
+        filter: isLightPage
+          ? 'drop-shadow(0 0 4px rgba(162,148,249,0.5))'
+          : 'drop-shadow(0 0 8px rgba(255,255,255,0.9)) drop-shadow(0 0 15px rgba(255,255,255,0.6))'
+      }}
+    />
+    <defs>
+      <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#d1d5db', stopOpacity: 1 }} />
+        <stop offset="50%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#d1d5db', stopOpacity: 1 }} />
+      </linearGradient>
+      <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#A294F9', stopOpacity: 1 }} />
+        <stop offset="50%" style={{ stopColor: '#CDC1FF', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#A294F9', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -87,9 +120,17 @@ const NavBar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className={`${isLightPage ? 'text-[#4C1D95] hover:text-[#A294F9] font-bold' : 'text-white/80 hover:text-white font-medium'} transition-colors`}
+                  className={`relative ${isLightPage ? 'text-[#4C1D95] hover:text-[#A294F9] font-bold' : 'text-white/80 hover:text-white font-medium'} transition-colors group`}
                 >
                   Dashboard
+                  <WavyUnderline isActive={location.pathname === '/dashboard'} isLightPage={isLightPage} />
+                </Link>
+                <Link
+                  to="/urls"
+                  className={`relative ${isLightPage ? 'text-[#4C1D95] hover:text-[#A294F9] font-bold' : 'text-white/80 hover:text-white font-medium'} transition-colors group`}
+                >
+                  My Links
+                  <WavyUnderline isActive={location.pathname === '/urls'} isLightPage={isLightPage} />
                 </Link>
                 <div className="relative profile-dropdown-container">
                   <button
@@ -178,34 +219,13 @@ const NavBar = () => {
                   className="relative text-white/70 hover:text-white font-medium transition-colors group"
                 >
                   Log In
-                  <svg
-                    className="absolute -bottom-2 left-0 w-0 group-hover:w-full transition-all duration-300 overflow-visible"
-                    viewBox="0 0 100 8"
-                    preserveAspectRatio="none"
-                    style={{ height: '8px' }}
-                  >
-                    <path
-                      d="M0,4 Q5,1 10,4 T20,4 T30,4 T40,4 T50,4 T60,4 T70,4 T80,4 T90,4 T100,4"
-                      fill="none"
-                      stroke="url(#silverGradient)"
-                      strokeWidth="2.5"
-                      style={{
-                        filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.9)) drop-shadow(0 0 15px rgba(255,255,255,0.6))'
-                      }}
-                    />
-                    <defs>
-                      <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style={{ stopColor: '#d1d5db', stopOpacity: 1 }} />
-                        <stop offset="50%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
-                        <stop offset="100%" style={{ stopColor: '#d1d5db', stopOpacity: 1 }} />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                  <WavyUnderline isActive={false} isLightPage={isLightPage} />
                 </Link>
                 <Link
                   to="/auth"
                   search={{ mode: 'signup' }}
-                  className="px-5 py-2.5 text-sm font-semibold text-violet-900 bg-violet-100 hover:bg-violet-200 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                  className="px-6 py-2.5 text-xl text-violet-900 bg-violet-100 hover:bg-violet-200 rounded-lg transition-all transform hover:scale-105 hover:-rotate-3 shadow-[0_0_15px_rgba(162,148,249,0.5)] hover:shadow-[0_0_20px_rgba(162,148,249,0.8)]"
+                  style={{ fontFamily: "'Caveat', cursive" }}
                 >
                   Get Started
                 </Link>
@@ -267,6 +287,13 @@ const NavBar = () => {
                   >
                     Dashboard
                   </Link>
+                  <Link
+                    to="/urls"
+                    className="block px-4 py-3 text-white/80 hover:bg-white/10 rounded-xl transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Links
+                  </Link>
                   <button
                     onClick={() => {
                       handleLogout();
@@ -290,7 +317,8 @@ const NavBar = () => {
                   <Link
                     to="/auth"
                     search={{ mode: 'signup' }}
-                    className="block px-4 py-3 text-gray-900 bg-white hover:bg-gray-100 rounded-xl text-center font-bold shadow-lg"
+                    className="block px-4 py-3 text-2xl text-violet-900 bg-white hover:bg-violet-50 rounded-xl text-center shadow-lg transition-all transform hover:scale-105 hover:-rotate-3 hover:shadow-[0_0_20px_rgba(162,148,249,0.8)]"
+                    style={{ fontFamily: "'Caveat', cursive" }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Get Started

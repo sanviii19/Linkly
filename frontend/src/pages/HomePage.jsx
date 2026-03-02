@@ -70,7 +70,7 @@ const HomePage = () => {
 
             {/* Right Side - URL Shortener Form */}
             <div>
-              <form onSubmit={handleSubmit} className="bg-violet-100/95 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-violet-200/50 hover:bg-violet-200 transition-all transform hover:scale-101  duration-300">
+              <form onSubmit={handleSubmit} className="bg-violet-100/95 backdrop-blur-lg rounded-3xl p-10 shadow-2xl border border-2 border-purple-600 hover:bg-violet-200 transition-all transform hover:scale-101  duration-300">
                 {/* Heading */}
                 <div className="flex items-center gap-3 mb-8">
                   <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

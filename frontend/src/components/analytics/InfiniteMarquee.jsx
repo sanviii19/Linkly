@@ -29,7 +29,7 @@ const InfiniteMarquee = () => {
                 transition={{
                     repeat: Infinity,
                     ease: "linear",
-                    duration: 30 // Adjust duration for scroll speed
+                    duration: 100 // Adjust duration for scroll speed
                 }}
             >
                 {items.map((msg, idx) => (

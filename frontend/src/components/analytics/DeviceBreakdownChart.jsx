@@ -8,16 +8,15 @@ const DeviceBreakdownChart = ({ data }) => {
     const isNoData = data.length === 1 && data[0].name === 'No Data';
 
     return (
-        <div className="relative group w-full h-full mb-3 mr-3 cursor-default">
+        <div className="relative group w-full h-full mb-2 mr-2 cursor-default">
             {/* Bottom Card / Shadow */}
-            <div className={`absolute inset-0 border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px] bg-[#E5D9F2]`} />
+            <div className={`absolute inset-0 border-2 border-[#A294F9]/40 rounded-xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[6px] translate-y-[6px] group-hover:translate-x-[8px] group-hover:translate-y-[8px] bg-[#E5D9F2]`} />
 
             {/* Top Card */}
             <CardSpotlight
-                className="relative bg-white rounded-2xl p-4 sm:p-6 border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] z-10 hover:-translate-x-1 hover:-translate-y-1 w-full h-full"
-                color="rgba(162, 148, 249, 0.2)"
+                className="relative bg-[#FFFBF1] rounded-xl p-4 sm:p-5 border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] z-10 hover:-translate-x-1 hover:-translate-y-1 w-full h-full"
             >
-                <h3 className="text-xl font-black text-gray-900 mb-4 uppercase tracking-tight">Devices</h3>
+                <h3 className="text-lg font-black text-gray-900 mb-3 uppercase tracking-tight">Devices</h3>
                 <div className="flex-1 w-full relative">
                     {isNoData ? (
                         <div className="absolute inset-0 flex items-center justify-center font-bold text-gray-400 border-2 border-dashed border-gray-200 rounded-xl">
@@ -30,8 +29,8 @@ const DeviceBreakdownChart = ({ data }) => {
                                     data={data}
                                     cx="50%"
                                     cy="50%"
-                                    innerRadius={70}
-                                    outerRadius={100}
+                                    innerRadius={50}
+                                    outerRadius={80}
                                     paddingAngle={3}
                                     dataKey="value"
                                     stroke="#A294F9"
@@ -44,15 +43,16 @@ const DeviceBreakdownChart = ({ data }) => {
                                 <Tooltip
                                     contentStyle={{
                                         backgroundColor: '#fff',
-                                        border: '2px solid #A294F9',
-                                        boxShadow: '4px 4px 0px 0px rgba(162,148,249,0.4)',
-                                        borderRadius: '0.5rem',
+                                        border: '1.5px solid #A294F9',
+                                        boxShadow: '2px 2px 0px 0px rgba(162,148,249,0.4)',
+                                        borderRadius: '0.3rem',
                                         fontWeight: 'bold',
+                                        fontSize: '12px',
                                         color: '#4a3d8f'
                                     }}
                                 />
                                 <Legend
-                                    wrapperStyle={{ fontWeight: 'bold', fontSize: '14px', color: '#6b5b95' }}
+                                    wrapperStyle={{ fontWeight: 'bold', fontSize: '11px', color: '#6b5b95' }}
                                 />
                             </PieChart>
                         </ResponsiveContainer>

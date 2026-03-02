@@ -7,7 +7,7 @@ const FAQ = () => {
     const faqs = [
         {
             question: "How do I get started with Linkly?",
-            answer: "Getting started is easy! Simply sign up for a free account, paste your long URL into the shortener box, and click 'Shorten Now'. You can then copy your new short link and share it anywhere."
+            answer: "Getting started is easy! Simply sign up for a free account, paste your long URL into the shortener box, and click 'Shorten Now'. You can then copy your new short link, generate a QR code, and share it anywhere."
         },
         {
             question: "Can I customize my short links?",
@@ -15,24 +15,24 @@ const FAQ = () => {
         },
         {
             question: "What analytics are available?",
-            answer: "We provide detailed analytics for all your links, including total clicks, geographic location of visitors, device types, and referral sources. You can view these insights directly in your dashboard."
+            answer: "We provide comprehensive analytics for all your links through an intuitive dashboard. You can track total clicks and unique users, view your daily click trends by week, and see a breakdown of the specific device types (Mobile, Desktop, Tablet) your visitors are using."
         },
         {
-            question: "Can I set expiration dates for my links?",
-            answer: "Yes! For authenticated users, you can set custom expiration dates for any of your shortened links. Once expired, the link will no longer redirect, helping you maintain control over time-sensitive content and campaigns."
+            question: "Can I set expiration dates or schedule my links?",
+            answer: "Absolutely! For authenticated users, you can schedule links to become active at a specific date and time, and set custom expiration dates when they should stop redirecting. This gives you complete control over time-sensitive campaigns."
         },
         {
             question: "How secure are my links?",
-            answer: "Security is our top priority. All links are encrypted with HTTPS. We also offer password protection for your short links to ensure only authorized users can access your content."
+            answer: "Security is our top priority. All links are encrypted with HTTPS. We also offer password protection for your short links—visitors will be prompted to enter your secure pin before they can access the destination URL."
         },
         {
-            question: "What's included in the free plan?",
-            answer: "Our free plan includes unlimited link shortening, basic analytics, and custom aliases. For advanced features like bulk shortening and team collaboration, check out our premium plans."
+            question: "Can I generate QR codes and share links directly?",
+            answer: "Yes! Every link you create automatically generates a dynamic QR code that you can download. Plus, our dashboard includes one-click sharing buttons for WhatsApp, X (Twitter), LinkedIn, and Facebook."
         }
     ];
 
     return (
-        <section className="py-20 bg-gray-900 border-t border-purple-700 relative overflow-hidden">
+        <section id="faq" className="py-20 bg-gray-900 border-t border-purple-700 relative overflow-hidden">
             {/* Background decorations */}
             <div className="absolute inset-0 opacity-20 pointer-events-none">
                 <div className="absolute top-20 left-20 w-96 h-96 bg-violet-600/50 rounded-full blur-3xl animate-pulse"></div>

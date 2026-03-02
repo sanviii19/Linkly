@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 export const CardSpotlight = ({
     children,
     radius = 250,
-    color = "rgba(139, 92, 246, 0.15)", // Default faint violet spotlight
+    color = "rgba(240, 231, 188, 0.45)", // Warm, visible yellowish glow for pale backgrounds
     className,
     ...props
 }) => {

@@ -17,31 +17,30 @@ const LinkInfoCard = ({ link }) => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 w-full h-full">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 w-full h-full">
             {/* Card 1: Link Details */}
-            <div className="relative group w-full sm:mb-4 sm:mr-4 mb-3 mr-3 cursor-default flex-1">
+            <div className="relative group w-full sm:mb-2 sm:mr-2 mb-2 mr-2 cursor-default flex-1">
                 {/* Bottom Card */}
-                <div className="absolute inset-0 bg-[#A294F9] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[16px] translate-y-[16px] group-hover:translate-x-[24px] group-hover:translate-y-[24px] shadow-sm" />
+                <div className="absolute inset-0 bg-[#A294F9] border-2 border-[#A294F9]/40 rounded-xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px] shadow-sm" />
 
                 {/* Middle Card */}
-                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px]" />
+                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[4px] translate-y-[4px] group-hover:translate-x-[6px] group-hover:translate-y-[6px]" />
 
                 {/* Top Card */}
                 <CardSpotlight
-                    className="relative bg-white rounded-2xl p-6 lg:p-8 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[4px] group-hover:-translate-y-[4px] z-10"
-                    color="rgba(162, 148, 249, 0.25)"
+                    className="relative bg-[#FFFBF1] rounded-xl p-4 lg:p-6 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] z-10"
                 >
-                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                        <ExternalLink className="w-6 h-6 text-[#A294F9]" />
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <ExternalLink className="w-5 h-5 text-[#A294F9]" />
                         Link Details
                     </h3>
 
-                    <div className="space-y-6 flex-1 flex flex-col">
-                        <div className="space-y-6">
+                    <div className="space-y-4 flex-1 flex flex-col">
+                        <div className="space-y-4">
                             {/* Short Link */}
                             <div>
-                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-[#A294F9]/30 bg-white text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all duration-300 ease-out w-full sm:w-fit group hover:rotate-1 hover:ring-4 hover:ring-[#CDC1FF]/40 origin-left cursor-text">
-                                    <span className="bg-[#A294F9] text-white px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider leading-none uppercase sm:shrink-0">
+                                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 border-[#A294F9]/30 bg-white text-xs sm:text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[1px] hover:-translate-y-[1px] transition-all duration-300 ease-out w-full sm:w-fit group hover:rotate-1 hover:ring-[3px] hover:ring-[#CDC1FF]/40 origin-left cursor-text">
+                                    <span className="bg-[#A294F9] text-white px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold tracking-wider leading-none uppercase sm:shrink-0">
                                         SHORT LINK
                                     </span>
                                     <span className="text-[#A294F9] font-bold font-mono text-xs sm:text-sm truncate flex-1 min-w-[100px]">
@@ -63,16 +62,13 @@ const LinkInfoCard = ({ link }) => {
                                     href={link.originalUrl || link.full_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-[#A294F9]/30 bg-white text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all duration-300 ease-out w-fit max-w-full group hover:-rotate-1 hover:ring-4 hover:ring-[#CDC1FF]/30 origin-left cursor-pointer"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border-2 border-[#A294F9]/30 bg-white text-xs sm:text-sm font-semibold text-gray-900 shadow-[3px_3px_0px_0px_rgba(162,148,249,0.3)] hover:shadow-[4px_4px_0px_0px_rgba(162,148,249,0.3)] hover:-translate-x-[1px] hover:-translate-y-[1px] transition-all duration-300 ease-out w-fit max-w-full group hover:-rotate-1 hover:ring-[3px] hover:ring-[#CDC1FF]/30 origin-left cursor-pointer"
                                 >
-                                    <span className="bg-[#CDC1FF] text-gray-900 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider leading-none uppercase shrink-0">
+                                    <span className="bg-[#CDC1FF] text-gray-900 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold tracking-wider leading-none uppercase shrink-0">
                                         DESTINATION
                                     </span>
                                     <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[250px] pr-1">
                                         {link.originalUrl || link.full_url}
-                                    </span>
-                                    <span className="text-gray-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform font-bold shrink-0">
-                                        ↗
                                     </span>
                                 </a>
                             </div>
@@ -82,31 +78,30 @@ const LinkInfoCard = ({ link }) => {
             </div>
 
             {/* Card 2: Status & Protection */}
-            <div className="relative group w-full sm:mb-4 sm:mr-4 mb-3 mr-3 cursor-default flex-1">
+            <div className="relative group w-full sm:mb-2 sm:mr-2 mb-2 mr-2 cursor-default flex-1">
                 {/* Bottom Card */}
-                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[16px] translate-y-[16px] group-hover:translate-x-[24px] group-hover:translate-y-[24px] shadow-sm" />
+                <div className="absolute inset-0 bg-[#CDC1FF] border-2 border-[#A294F9]/40 rounded-xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px] shadow-sm" />
 
                 {/* Middle Card */}
-                <div className="absolute inset-0 bg-[#E5D9F2] border-2 border-[#A294F9]/40 rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[8px] translate-y-[8px] group-hover:translate-x-[12px] group-hover:translate-y-[12px]" />
+                <div className="absolute inset-0 bg-[#E5D9F2] border-2 border-[#A294F9]/40 rounded-xl transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] translate-x-[4px] translate-y-[4px] group-hover:translate-x-[6px] group-hover:translate-y-[6px]" />
 
                 {/* Top Card */}
                 <CardSpotlight
-                    className="relative bg-white rounded-2xl p-6 lg:p-8 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[4px] group-hover:-translate-y-[4px] z-10"
-                    color="rgba(205, 193, 255, 0.3)"
+                    className="relative bg-[#FFFBF1] rounded-xl p-4 lg:p-6 h-full border-2 border-[#A294F9]/30 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] z-10"
                 >
-                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                        <Shield className="w-6 h-6 text-[#A294F9]" />
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <Shield className="w-5 h-5 text-[#A294F9]" />
                         Status & Details
                     </h3>
 
-                    <div className="space-y-6 flex-1 flex flex-col relative z-20 pointer-events-auto">
-                        <div className="space-y-3">
+                    <div className="space-y-4 flex-1 flex flex-col relative z-20 pointer-events-auto">
+                        <div className="space-y-2">
                             {/* Password Protection */}
-                            <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${link.isPasswordProtected
+                            <div className={`flex items-center gap-2 p-2 sm:p-3 rounded-lg border-[1.5px] transition-all ${link.isPasswordProtected
                                 ? 'bg-amber-50 border-amber-200 text-amber-800'
                                 : 'bg-white border-gray-200 text-gray-700'
                                 }`}>
-                                <Lock className={`w-5 h-5 ${link.isPasswordProtected ? 'text-amber-500' : 'text-gray-400'}`} />
+                                <Lock className={`w-4 h-4 sm:w-5 sm:h-5 ${link.isPasswordProtected ? 'text-amber-500' : 'text-gray-400'}`} />
                                 <div className="flex-1">
                                     <p className="text-sm font-bold">
                                         {link.isPasswordProtected ? 'Password Protected' : 'No Password Protection'}
@@ -116,11 +111,11 @@ const LinkInfoCard = ({ link }) => {
 
                             {/* Expiration Status */}
                             {link.expiresAt && (
-                                <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${isExpired
+                                <div className={`flex items-center gap-2 p-2 sm:p-3 rounded-lg border-[1.5px] transition-all ${isExpired
                                     ? 'bg-red-50 border-red-200 text-red-800'
                                     : 'bg-emerald-50 border-emerald-200 text-emerald-800'
                                     }`}>
-                                    <AlertCircle className={`w-5 h-5 ${isExpired ? 'text-red-500' : 'text-emerald-500'}`} />
+                                    <AlertCircle className={`w-4 h-4 sm:w-5 sm:h-5 ${isExpired ? 'text-red-500' : 'text-emerald-500'}`} />
                                     <div className="flex-1">
                                         <p className="text-sm font-bold">
                                             {isExpired ? 'Expired' : 'Active'}
@@ -137,11 +132,11 @@ const LinkInfoCard = ({ link }) => {
 
                             {/* Scheduled Status */}
                             {link.activeFrom && (
-                                <div className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${isScheduled
+                                <div className={`flex items-center gap-2 p-2 sm:p-3 rounded-lg border-[1.5px] transition-all ${isScheduled
                                     ? 'bg-blue-50 border-blue-200 text-blue-800'
                                     : 'bg-white border-gray-200 text-gray-700'
                                     }`}>
-                                    <Clock className={`w-5 h-5 ${isScheduled ? 'text-blue-500' : 'text-gray-400'}`} />
+                                    <Clock className={`w-4 h-4 sm:w-5 sm:h-5 ${isScheduled ? 'text-blue-500' : 'text-gray-400'}`} />
                                     <div className="flex-1">
                                         <p className="text-sm font-bold">
                                             {isScheduled ? 'Scheduled' : 'Active'}
