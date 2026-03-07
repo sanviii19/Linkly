@@ -64,8 +64,7 @@ const googleAuthController = wrapAsync(async (req, res) => {
   res.cookie('token', token, cookieOptions);
 
   // Redirect to frontend callback page
-  const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, ''); // Remove trailing slash
-  res.redirect(`${frontendUrl}/auth/google/callback`);
+  res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback`);
 });
 
 /**

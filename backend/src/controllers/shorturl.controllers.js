@@ -39,24 +39,20 @@ export const redirectFromShortUrlController = wrapAsync(async (req, res) => {
 
     // Check if link has expired
     if (url.expiresAt && new Date() > new Date(url.expiresAt)) {
-        const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
-        return res.redirect(`${frontendUrl}/link-expired?expiredAt=${url.expiresAt.toISOString()}&shortUrl=${encodeURIComponent(url.short_url)}`);
+        return res.redirect(`${process.env.FRONTEND_URL}/link-expired?expiredAt=${url.expiresAt.toISOString()}&shortUrl=${encodeURIComponent(url.short_url)}`);
     }
 
     // Check if link is active yet
     if (url.activeFrom && new Date() < new Date(url.activeFrom)) {
-        const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
         // Pass the original shortUrl so the frontend can redirect back to it when active
-        const backendUrl = process.env.BACKEND_URL.replace(/\/$/, '');
-        const shortUrl = `${backendUrl}/${url.short_url}`;
-        return res.redirect(`${frontendUrl}/link-not-active?activeFrom=${url.activeFrom.toISOString()}&shortUrl=${encodeURIComponent(shortUrl)}`);
+        const shortUrl = `${process.env.BACKEND_URL}/${url.short_url}`;
+        return res.redirect(`${process.env.FRONTEND_URL}/link-not-active?activeFrom=${url.activeFrom.toISOString()}&shortUrl=${encodeURIComponent(shortUrl)}`);
     }
 
     if (url.isLinkPassword) {
         // Redirect to frontend password entry page
         // Assuming frontend route is /protected/:shortUrl
-        const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
-        return res.redirect(`${frontendUrl}/protected/${url.short_url}`);
+        return res.redirect(`${process.env.FRONTEND_URL}/protected/${url.short_url}`);
     }
 
     await incrementClicks(id);
