@@ -98,6 +98,15 @@ const NavBar = () => {
     navigate({ to: '/', replace: true });
   };
 
+  const scrollToHomeSection = (sectionId) => {
+    if (location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? (isLightPage ? 'bg-[#E5D9F2]/80 backdrop-blur-xl py-4 shadow-md shadow-[#A294F9]/10 border-b border-[#A294F9]/15' : 'bg-violet-950/90 backdrop-blur-md py-4') : (isLightPage ? 'bg-transparent py-6' : 'bg-transparent py-6')}`}>
       <div className="max-w-15xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -208,10 +217,20 @@ const NavBar = () => {
                   className="text-white/70 hover:text-white font-medium transition-colors"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                    scrollToHomeSection('features');
                   }}
                 >
                   Features
+                </a>
+                <a
+                  href="/#faq"
+                  className="text-white/70 hover:text-white font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHomeSection('faq');
+                  }}
+                >
+                  FAQ
                 </a>
                 <Link
                   to="/auth"
@@ -306,6 +325,17 @@ const NavBar = () => {
                 </>
               ) : (
                 <>
+                  <a
+                    href="/#faq"
+                    className="block px-4 py-3 text-white/80 hover:bg-white/10 rounded-xl text-center transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToHomeSection('faq');
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    FAQ
+                  </a>
                   <Link
                     to="/auth"
                     search={{ mode: 'login' }}
