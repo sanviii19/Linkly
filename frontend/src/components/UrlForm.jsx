@@ -4,7 +4,7 @@ import axios from 'axios';
 import { DotLoader } from 'react-spinners';
 
 const UrlForm = ({ onSuccess }) => {
-  const [url, setUrl] = useState("https://www.google.com");
+  const [url, setUrl] = useState("");
   const [customSlug, setCustomSlug] = useState("");
   const [ShortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
