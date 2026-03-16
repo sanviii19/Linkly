@@ -7,6 +7,7 @@ import { DotLoader } from 'react-spinners';
 const GoogleCallbackPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
   useEffect(() => {
     // This page is loaded after successful Google auth
@@ -14,7 +15,7 @@ const GoogleCallbackPage = () => {
     const verifyAuth = async () => {
       try {
         // Make a request to get current user info
-        const response = await fetch('http://localhost:3000/api/auth/me', {
+        const response = await fetch(`${backendUrl}/api/auth/me`, {
           credentials: 'include'
         });
         
@@ -32,7 +33,7 @@ const GoogleCallbackPage = () => {
     };
 
     verifyAuth();
-  }, [navigate, dispatch]);
+  }, [navigate, dispatch, backendUrl]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50">

@@ -46,7 +46,7 @@ app.use(errorHandler);
 
 app.listen(3000, () => {
     connectDB();
-    console.log('Server is running on http://localhost:3000');
+  console.log(`Server is running on ${process.env.BACKEND_URL || 'http://localhost:3000'}`);
 });
 
 
