@@ -16,12 +16,12 @@ export const createShortUrlController = wrapAsync(async (req, res) => {
     if (req.user) {
         const result = await createShortUrlWithUserService(url, slug, req.user._id, activeFrom);
         return res.json({
-            shortUrl: process.env.BACKEND_URL + result.shortUrl,
+            shortUrl: process.env.BACKEND_URL + "/" + result.shortUrl,
             qrCode: result.qrCode
         });
     } else {
         const shortUrl = await createShortUrlWithoutUserService(url);
-        return res.send(process.env.BACKEND_URL + shortUrl);
+        return res.send(process.env.BACKEND_URL + "/" + shortUrl);
     }
 });
 
@@ -127,7 +127,7 @@ export const createCustomShortUrlController = wrapAsync(async (req, res) => {
     const { url, slug } = req.body;
     const result = await createShortUrlWithUserService(url, slug, req.user._id);
     return res.json({
-        shortUrl: process.env.BACKEND_URL + result.shortUrl,
+        shortUrl: process.env.BACKEND_URL + "/" + result.shortUrl,
         qrCode: result.qrCode
     });
 })
