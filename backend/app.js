@@ -27,6 +27,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK'
+  });
+});
+
 // app.use(passport.initialize());
 
 app.use('/api/auth', AuthRoutes);
