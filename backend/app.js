@@ -16,6 +16,7 @@ import AnalyticsRouter from './src/routes/analytics.routes.js';
 
 const app = express();
 
+app.set('trust proxy', 1);
 app.use(passport.initialize());
 
 app.use(cors({
