@@ -8,7 +8,7 @@ import { rootRoute } from "./root.route"
 import { linkNotActiveRoute } from "./linkNotActive.route"
 import { expiredLinkRoute } from "./expiredLink.route"
 import { analyticsRoute } from "./analytics.route"
-
+import { redirectRoute } from "./redirect.route"
 // Root route definition is now in root.route.js
 
 export const routeTree = rootRoute.addChildren([
@@ -20,5 +20,6 @@ export const routeTree = rootRoute.addChildren([
     protectedLinkRoute,
     linkNotActiveRoute,
     expiredLinkRoute,
-    analyticsRoute
+    analyticsRoute,
+    redirectRoute
 ])
