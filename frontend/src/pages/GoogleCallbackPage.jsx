@@ -18,7 +18,7 @@ const GoogleCallbackPage = () => {
         const response = await fetch(`${backendUrl}/api/auth/me`, {
           credentials: 'include'
         });
-        
+
         if (response.ok) {
           const data = await response.json();
           dispatch(login(data.data.user));

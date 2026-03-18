@@ -71,13 +71,13 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
         <div className="relative z-10 text-center text-white max-w-lg">
           <div className="mb-8">
             {/* Image */}
-            <img 
-              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" 
-              alt="Analytics and growth illustration" 
+            <img
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+              alt="Analytics and growth illustration"
               className="w-full max-w-md mx-auto rounded-2xl shadow-2xl mb-8"
             />
           </div>
-          
+
           <h1 className="text-4xl font-extrabold mb-6 leading-tight tracking-tight">
             <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-purple-200 to-indigo-200">
               Join
@@ -91,11 +91,11 @@ const RegisterForm = ({ onSuccess, onToggleForm }) => {
               Today!
             </span>
           </h1>
-          
+
           <p className="text-lg text-white/90 leading-relaxed mb-4 font-medium">
             Create, track, and optimize your links effortlessly.
           </p>
-          
+
           <p className="text-lg text-white/80">
             Sign up now and take control of your digital presence.
           </p>

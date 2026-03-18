@@ -4,7 +4,7 @@ import { verifyToken } from "../utils/jwtHelper.js";
 export const authMiddleware = async (req, res, next) => {
     console.log('----- inside authMiddleware -----');
     const token = req.cookies.token;
-    if(!token) {
+    if (!token) {
         return res.status(401).json({
             isSuccess: false,
             message: 'Unauthorized : token missing',
@@ -14,7 +14,7 @@ export const authMiddleware = async (req, res, next) => {
         const decoded = verifyToken(token);
         const user = await findUserById(decoded.id);
         // console.log('----- user found in authMiddleware -----', user);
-        if(!user) {
+        if (!user) {
             return res.status(401).json({
                 isSuccess: false,
                 message: 'Unauthorized : user not found',
@@ -35,14 +35,14 @@ export const authMiddleware = async (req, res, next) => {
 export const optionalAuthMiddleware = async (req, res, next) => {
     console.log('----- inside optionalAuthMiddleware -----');
     const token = req.cookies.token;
-    if(!token) {
+    if (!token) {
         // No token, continue without user
         return next();
     }
     try {
         const decoded = verifyToken(token);
         const user = await findUserById(decoded.id);
-        if(user) {
+        if (user) {
             req.user = user;
         }
         next();

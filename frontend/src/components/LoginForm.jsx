@@ -69,13 +69,13 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
         <div className="relative z-10 text-center text-white max-w-lg">
           <div className="mb-8">
             {/* Image */}
-            <img 
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop" 
-              alt="Link shortening illustration" 
+            <img
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+              alt="Link shortening illustration"
               className="w-full max-w-md mx-auto rounded-2xl shadow-2xl mb-8"
             />
           </div>
-          
+
           <h1 className="text-5xl font-extrabold mb-6 leading-tight tracking-tight">
             <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-purple-200 to-indigo-200">
               Welcome to
@@ -85,17 +85,17 @@ const LoginForm = ({ onSuccess, onToggleForm }) => {
               Linkly!
             </span>
           </h1>
-          
+
           <p className="text-lg text-white/90 leading-relaxed mb-4 font-medium">
             Shorten your links, expand your reach.
           </p>
-          
+
           <p className="text-lg text-white/80">
             Transform long URLs into powerful, shareable links in seconds.
           </p>
         </div>
       </div>
-        
+
 
       {/* Right Side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-violet-100 px-8 py-12">
