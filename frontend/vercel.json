@@ -1,6 +1,10 @@
 {
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "https://linkly-mto0.onrender.com/api/$1"
+    },
+    {
       "handle": "filesystem"
     },
     {

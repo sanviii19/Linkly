@@ -73,8 +73,8 @@ const googleAuthController = wrapAsync(async (req, res) => {
 const logoutController = wrapAsync(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     path: '/',
   });
 
