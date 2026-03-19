@@ -8,7 +8,7 @@ import DeviceBreakdownChart from '../components/Analytics/DeviceBreakdownChart';
 import LinkInfoCard from '../components/Analytics/LinkInfoCard';
 import StatCard from '../components/Analytics/StatCard';
 import InfiniteMarquee from '../components/Analytics/InfiniteMarquee';
-import { BeatLoader } from 'react-spinners';
+import { DotLoader } from 'react-spinners';
 import { motion } from 'framer-motion';
 
 const AnalyticsPage = () => {
@@ -97,8 +97,8 @@ const AnalyticsPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#F5EFFF] flex items-center justify-center bg-[radial-gradient(#CDC1FF_1px,transparent_1px)] [background-size:24px_24px]">
-                <BeatLoader color="#A294F9" size={20} margin={5} />
+            <div className="min-h-screen bg-[#F5EFFF] flex flex-col items-center justify-center bg-[radial-gradient(#CDC1FF_1px,transparent_1px)] [background-size:24px_24px]">
+                <DotLoader color="#A294F9" size={60} />
             </div>
         );
     }
