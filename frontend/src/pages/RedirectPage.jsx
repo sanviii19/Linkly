@@ -21,12 +21,12 @@ const RedirectPage = () => {
     }, [shortUrl]);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 p-4">
-            <div className="w-full max-w-sm bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-10 shadow-2xl shadow-purple-900/20 text-center animate-in fade-in zoom-in duration-500">
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white p-4">
+            <div className="text-center animate-in fade-in zoom-in duration-500">
                 <div className="flex justify-center mb-6">
                     <DotLoader size={60} color="#a78bfa" />
                 </div>
-                <h1 className="text-2xl font-bold text-white mb-2">Redirecting...</h1>
+                <h1 className="text-2xl font-bold text-slate-800 mb-2">Redirecting...</h1>
             </div>
         </div>
     );
