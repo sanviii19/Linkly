@@ -122,8 +122,8 @@ const LinkInfoCard = ({ link }) => {
                                         </p>
                                         <p className="text-xs font-medium opacity-80 mt-0.5">
                                             {isExpired
-                                                ? `Expired on ${new Date(link.expiresAt).toLocaleDateString()}`
-                                                : `Expires on ${new Date(link.expiresAt).toLocaleDateString()}`
+                                                ? `Expired on ${new Date(link.expiresAt).toLocaleString()}`
+                                                : `Expires on ${new Date(link.expiresAt).toLocaleString()}`
                                             }
                                         </p>
                                     </div>

@@ -63,7 +63,11 @@ const UrlForm = ({ onSuccess }) => {
         payload.slug = customSlug.trim();
       }
       if (activeFrom) {
-        payload.activeFrom = activeFrom;
+        // datetime-local gives a local time string (e.g. "2026-03-20T15:00").
+        // new Date() treats bare strings without timezone info as UTC in some
+        // environments, so we explicitly parse it as a local Date and convert
+        // to ISO (which is UTC) so the backend always receives the correct moment.
+        payload.activeFrom = new Date(activeFrom).toISOString();
       }
       const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/create`, payload, {
         withCredentials: true

@@ -3,9 +3,16 @@ import { createPortal } from 'react-dom';
 import { DotLoader } from 'react-spinners';
 import { updateUrl } from '../api/User.api';
 
+// Format a Date object as a local datetime-local string (YYYY-MM-DDTHH:mm)
+const toLocalDatetimeString = (date) => {
+    const d = new Date(date);
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
 const EditExpirationModal = ({ url, onClose, onUpdate }) => {
     const [expiresAt, setExpiresAt] = useState(
-        url.expiresAt ? new Date(url.expiresAt).toISOString().slice(0, 16) : ''
+        url.expiresAt ? toLocalDatetimeString(url.expiresAt) : ''
     );
     const [isLoading, setIsLoading] = useState(false);
 
@@ -24,8 +31,9 @@ const EditExpirationModal = ({ url, onClose, onUpdate }) => {
         setIsLoading(true);
         try {
             const payload = {
-                expiresAt: expiresAt || null, // If empty string, send null to remove expiration
-                isExpired: false // Reset expired status if updating date
+                // Convert local datetime string to UTC ISO string for the backend
+                expiresAt: expiresAt ? new Date(expiresAt).toISOString() : null,
+                isExpired: false
             };
 
             // If setting a date in the past, maybe warn user? 
@@ -80,7 +88,7 @@ const EditExpirationModal = ({ url, onClose, onUpdate }) => {
                                 type="datetime-local"
                                 value={expiresAt}
                                 onChange={(e) => setExpiresAt(e.target.value)}
-                                min={new Date().toISOString().slice(0, 16)}
+                                min={toLocalDatetimeString(new Date())}
                                 className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl outline-none focus:border-violet-500 focus:bg-white transition-all duration-200"
                             />
                             <p className="text-xs text-gray-500">
