@@ -301,7 +301,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
         {currentUrls.map((url, index) => (
           <div
             key={url._id}
-            className={`group bg-violet-100/95 backdrop-blur-lg rounded-3xl p-6 shadow-xl border border-violet-200/50 hover:bg-violet-200 transition-all duration-300 relative ${moreActionsId === url._id || shareMenuId === url._id || expandedQrId === url._id ? 'z-50' : 'z-0'
+            className={`group bg-violet-100/95 backdrop-blur-lg rounded-3xl p-4 sm:p-6 shadow-xl border border-violet-200/50 hover:bg-violet-200 transition-all duration-300 relative overflow-hidden ${moreActionsId === url._id || shareMenuId === url._id || expandedQrId === url._id ? 'z-50' : 'z-0'
               }`}
           >
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
@@ -318,7 +318,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                     href={`${import.meta.env.VITE_BACKEND_URL}/${url.short_url}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-lg font-bold text-violet-600 hover:text-violet-700 hover:underline break-all block"
+                    className="text-lg font-bold text-violet-600 hover:text-violet-700 hover:underline break-all block max-w-full"
                   >
                     {import.meta.env.VITE_BACKEND_URL}/{url.short_url}
                   </a>
@@ -357,7 +357,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
               </div>
 
               {/* Actions Section - Clean & Modern */}
-              <div className="lg:min-w-[320px] lg:max-w-[320px] relative z-10">
+              <div className="lg:min-w-[280px] lg:max-w-[320px] relative z-10 w-full lg:w-auto">
                 {/* Status Badges */}
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   {url.isLinkPassword && (
@@ -395,7 +395,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                 </div>
 
                 {/* Primary Action Buttons - Icon-based */}
-                <div className="flex gap-2 relative z-0">
+                <div className="flex flex-wrap gap-2 relative z-0">
                   {/* Copy Button */}
                   <button
                     onClick={() => copyToClipboard(url.short_url, url._id)}

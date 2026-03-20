@@ -52,7 +52,22 @@ const DeviceBreakdownChart = ({ data }) => {
                                     }}
                                 />
                                 <Legend
-                                    wrapperStyle={{ fontWeight: 'bold', fontSize: '11px', color: '#6b5b95' }}
+                                    verticalAlign="bottom"
+                                    align="center"
+                                    iconType="circle"
+                                    iconSize={8}
+                                    layout="horizontal"
+                                    wrapperStyle={{ 
+                                        paddingTop: '15px', 
+                                        fontWeight: 'bold', 
+                                        fontSize: '11px', 
+                                        color: '#6b5b95',
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        flexWrap: 'wrap',
+                                        gap: '10px'
+                                    }}
                                 />
                             </PieChart>
                         </ResponsiveContainer>
