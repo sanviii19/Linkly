@@ -24,13 +24,13 @@ const DeviceBreakdownChart = ({ data }) => {
                         </div>
                     ) : (
                         <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
+                            <PieChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
                                 <Pie
                                     data={data}
-                                    cx="50%"
+                                    cx="35%"
                                     cy="50%"
-                                    innerRadius={50}
-                                    outerRadius={80}
+                                    innerRadius="45%"
+                                    outerRadius="75%"
                                     paddingAngle={3}
                                     dataKey="value"
                                     stroke="#A294F9"
@@ -52,21 +52,16 @@ const DeviceBreakdownChart = ({ data }) => {
                                     }}
                                 />
                                 <Legend
-                                    verticalAlign="bottom"
-                                    align="center"
+                                    verticalAlign="middle"
+                                    align="right"
+                                    layout="vertical"
                                     iconType="circle"
-                                    iconSize={8}
-                                    layout="horizontal"
+                                    iconSize={10}
                                     wrapperStyle={{ 
-                                        paddingTop: '15px', 
                                         fontWeight: 'bold', 
                                         fontSize: '11px', 
                                         color: '#6b5b95',
-                                        width: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        flexWrap: 'wrap',
-                                        gap: '10px'
+                                        paddingLeft: '10px'
                                     }}
                                 />
                             </PieChart>
