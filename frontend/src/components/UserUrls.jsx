@@ -29,6 +29,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
   // Refs for click-outside detection
   const moreActionsRef = useRef(null);
   const shareMenuRef = useRef(null);
+  const qrContainerRefs = useRef({});
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -43,13 +44,21 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
       if (shareMenuRef.current && !shareMenuRef.current.contains(event.target)) {
         setShareMenuId(null);
       }
+      // Close QR panel if clicked outside
+      if (expandedQrId) {
+        const qrEl = qrContainerRefs.current[expandedQrId];
+        const qrButton = document.querySelector(`[data-qr-btn="${expandedQrId}"]`);
+        if (qrEl && !qrEl.contains(event.target) && !(qrButton && qrButton.contains(event.target))) {
+          setExpandedQrId(null);
+        }
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [moreActionsId]);
+  }, [moreActionsId, expandedQrId]);
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -476,6 +485,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                   {/* QR Code Button */}
                   {url.qrCode && (
                     <button
+                      data-qr-btn={url._id}
                       onClick={() => toggleQrCode(url._id)}
                       className="group px-3.5 py-3 bg-violet-200/60 text-violet-700 border-2 border-violet-300/50 hover:bg-violet-300/70 hover:border-violet-400/60 rounded-xl transition-all duration-200 flex items-center justify-center"
                       title="QR Code"
@@ -529,7 +539,10 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
 
             {/* QR Code Display - Accordion style */}
             {url.qrCode && expandedQrId === url._id && (
-              <div className="mt-4 p-5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-violet-200/80">
+              <div
+                ref={el => qrContainerRefs.current[url._id] = el}
+                className="mt-4 p-5 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-violet-200/80"
+              >
                 <div className="flex flex-col md:flex-row items-center gap-5">
                   <div className="shrink-0">
                     <div className="p-3 bg-violet-50/60 rounded-xl shadow-md border-2 border-violet-200/70">
