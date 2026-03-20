@@ -8,6 +8,78 @@ import EditExpirationModal from './EditExpirationModal';
 import PasswordProtectionModal from './PasswordProtectionModal';
 import { deleteUrl } from '../api/User.api';
 
+// ─── Portal component for More Actions menu ───────────────────────────────────
+const MoreActionsPortal = ({ activeUrl, pos, onClose, onEditExpiration, onEditPassword, onDelete }) => {
+  const isMobile = window.innerWidth < 768;
+
+  const menuContent = (
+    <>
+      <button
+        onClick={() => { onEditExpiration(activeUrl); onClose(); }}
+        className="w-full px-4 py-3.5 text-left text-sm font-semibold text-gray-700 hover:bg-violet-100 flex items-center gap-3 transition-colors"
+      >
+        <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span>{activeUrl.expiresAt ? 'Edit Expiration' : 'Set Expiration'}</span>
+      </button>
+      <button
+        onClick={() => { onEditPassword(activeUrl); onClose(); }}
+        className="w-full px-4 py-3.5 text-left text-sm font-semibold text-gray-700 hover:bg-violet-100 flex items-center gap-3 transition-colors border-t border-violet-100"
+      >
+        <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <span>{activeUrl.isLinkPassword ? 'Edit Password' : 'Set Password'}</span>
+      </button>
+      <button
+        onClick={() => { onDelete(activeUrl._id); onClose(); }}
+        className="w-full px-4 py-3.5 text-left text-sm font-semibold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors border-t border-violet-100"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        <span>Delete Link</span>
+      </button>
+    </>
+  );
+
+  if (isMobile) {
+    return ReactDOM.createPortal(
+      <>
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]" onClick={onClose} />
+        <div
+          id="more-actions-portal-menu"
+          className="fixed bottom-0 left-0 right-0 z-[9999] bg-white rounded-t-2xl shadow-2xl border-t-2 border-violet-200 overflow-hidden"
+          style={{ animation: 'slideUp 0.25s ease-out' }}
+        >
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 rounded-full bg-violet-200" />
+          </div>
+          <div className="px-2 pb-4 pt-1">
+            <p className="text-xs font-bold text-violet-400 uppercase tracking-widest px-4 py-2">Actions</p>
+            {menuContent}
+          </div>
+          <div style={{ height: 'env(safe-area-inset-bottom, 8px)' }} />
+        </div>
+      </>,
+      document.body
+    );
+  }
+
+  return ReactDOM.createPortal(
+    <div
+      id="more-actions-portal-menu"
+      className="fixed bg-white rounded-xl shadow-2xl border border-violet-200 overflow-hidden"
+      style={{ zIndex: 9999, top: `${pos.top}px`, right: `${pos.right}px`, minWidth: '210px' }}
+    >
+      {menuContent}
+    </div>,
+    document.body
+  );
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader = true, onStatsLoaded, refreshTrigger }) => {
   const navigate = useNavigate();
   const [urls, setUrls] = useState([]);
@@ -663,100 +735,19 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
       </div>
     </div>
 
-    {/* Portal: More Actions Menu - renders in document.body to escape any overflow:hidden */}
     {moreActionsId && (() => {
       const activeUrl = urls.find(u => u._id === moreActionsId);
       if (!activeUrl) return null;
-      const isMobile = window.innerWidth < 768;
-
-      const menuContent = (
-        <>
-          <button
-            onClick={() => {
-              setEditExpirationUrl(activeUrl);
-              setMoreActionsId(null);
-            }}
-            className="w-full px-4 py-3.5 text-left text-sm font-semibold text-gray-700 hover:bg-violet-100 flex items-center gap-3 transition-colors"
-          >
-            <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span>{activeUrl.expiresAt ? 'Edit Expiration' : 'Set Expiration'}</span>
-          </button>
-          <button
-            onClick={() => {
-              setEditPasswordUrl(activeUrl);
-              setMoreActionsId(null);
-            }}
-            className="w-full px-4 py-3.5 text-left text-sm font-semibold text-gray-700 hover:bg-violet-100 flex items-center gap-3 transition-colors border-t border-violet-100"
-          >
-            <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span>{activeUrl.isLinkPassword ? 'Edit Password' : 'Set Password'}</span>
-          </button>
-          <button
-            onClick={() => {
-              handleDeleteUrl(activeUrl._id);
-              setMoreActionsId(null);
-            }}
-            className="w-full px-4 py-3.5 text-left text-sm font-semibold text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors border-t border-violet-100"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            <span>Delete Link</span>
-          </button>
-        </>
+      return (
+        <MoreActionsPortal
+          activeUrl={activeUrl}
+          pos={moreActionsPos}
+          onClose={() => setMoreActionsId(null)}
+          onEditExpiration={setEditExpirationUrl}
+          onEditPassword={setEditPasswordUrl}
+          onDelete={handleDeleteUrl}
+        />
       );
-
-      if (isMobile) {
-        // Bottom Sheet on mobile
-        return ReactDOM.createPortal(
-          <>
-            {/* Backdrop */}
-            <div
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[9998]"
-              onClick={() => setMoreActionsId(null)}
-            />
-            {/* Sheet */}
-            <div
-              id="more-actions-portal-menu"
-              className="fixed bottom-0 left-0 right-0 z-[9999] bg-white rounded-t-2xl shadow-2xl border-t-2 border-violet-200 overflow-hidden"
-              style={{ animation: 'slideUp 0.25s ease-out' }}
-            >
-              {/* Handle bar */}
-              <div className="flex justify-center pt-3 pb-1">
-                <div className="w-10 h-1 rounded-full bg-violet-200" />
-              </div>
-              <div className="px-2 pb-4 pt-1">
-                <p className="text-xs font-bold text-violet-400 uppercase tracking-widest px-4 py-2">Actions</p>
-                {menuContent}
-              </div>
-              {/* Safe area padding for phones with notches */}
-              <div style={{ height: 'env(safe-area-inset-bottom, 8px)' }} />
-            </div>
-          </>,
-          document.body
-        );
-      } else {
-        // Floating dropdown on desktop
-        return ReactDOM.createPortal(
-          <div
-            id="more-actions-portal-menu"
-            className="fixed bg-white/98 backdrop-blur-sm rounded-xl shadow-2xl border border-violet-200 overflow-hidden"
-            style={{
-              zIndex: 9999,
-              top: `${moreActionsPos.top}px`,
-              right: `${moreActionsPos.right}px`,
-              minWidth: '200px',
-            }}
-          >
-            {menuContent}
-          </div>,
-          document.body
-        );
-      }
     })()}
 
     <style>{`
