@@ -1,13 +1,14 @@
 import ClickModel from "../models/clickSchema.js";
+import { normalizeIp } from "../utils/normalizeIp.js";
 
 export const getAnalyticsForLink = async (urlId, startDate, endDate) => {
 
   // 1️⃣ Total clicks
   const totalClicks = await ClickModel.countDocuments({ urlId });
 
-  // 2️⃣ Unique clicks (by IP)
-  const uniqueIps = await ClickModel.distinct("ip", { urlId });
-  const uniqueClicks = uniqueIps.length;
+  // 2️⃣ Unique clicks (by IP) — normalize IPs so ::ffff:x.x.x.x and x.x.x.x are treated as the same device
+  const rawIps = await ClickModel.distinct("ip", { urlId });
+  const uniqueClicks = new Set(rawIps.map(normalizeIp)).size;
 
   // 3️⃣ Daily clicks - filtered by date range if provided
   const dailyClicksMatch = { urlId };

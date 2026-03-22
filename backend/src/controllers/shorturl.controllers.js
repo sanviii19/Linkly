@@ -4,6 +4,7 @@ import wrapAsync from "../utils/tryCatchWrapper.js";
 import argon2 from "argon2";
 import ClickModel from "../models/clickSchema.js";
 import { getDeviceType } from "../utils/getDeviceType.js";
+import { normalizeIp } from "../utils/normalizeIp.js";
 
 export const createShortUrlController = wrapAsync(async (req, res) => {
     console.log('----- inside createShortUrlController -----');
@@ -60,7 +61,7 @@ export const redirectFromShortUrlController = wrapAsync(async (req, res) => {
     // Analytics
     await ClickModel.create({
         urlId: url._id,
-        ip: req.ip,
+        ip: normalizeIp(req.ip),
         deviceType: getDeviceType(req.headers["user-agent"])
     });
 
