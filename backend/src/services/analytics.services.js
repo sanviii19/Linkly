@@ -6,9 +6,12 @@ export const getAnalyticsForLink = async (urlId, startDate, endDate) => {
   // 1️⃣ Total clicks
   const totalClicks = await ClickModel.countDocuments({ urlId });
 
-  // 2️⃣ Unique clicks (by IP) — normalize IPs so ::ffff:x.x.x.x and x.x.x.x are treated as the same device
-  const rawIps = await ClickModel.distinct("ip", { urlId });
-  const uniqueClicks = new Set(rawIps.map(normalizeIp)).size;
+  // 2️⃣ Unique visitors — use visitorId (cookie) where available, fall back to normalized IP for old records
+  const clicks = await ClickModel.find({ urlId }, { visitorId: 1, ip: 1 }).lean();
+  const uniqueIdentifiers = new Set(
+    clicks.map(c => c.visitorId || normalizeIp(c.ip) || 'unknown')
+  );
+  const uniqueClicks = uniqueIdentifiers.size;
 
   // 3️⃣ Daily clicks - filtered by date range if provided
   const dailyClicksMatch = { urlId };

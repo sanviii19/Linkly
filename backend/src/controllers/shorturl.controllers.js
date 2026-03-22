@@ -5,6 +5,7 @@ import argon2 from "argon2";
 import ClickModel from "../models/clickSchema.js";
 import { getDeviceType } from "../utils/getDeviceType.js";
 import { normalizeIp } from "../utils/normalizeIp.js";
+import crypto from 'crypto';
 
 export const createShortUrlController = wrapAsync(async (req, res) => {
     console.log('----- inside createShortUrlController -----');
@@ -58,10 +59,23 @@ export const redirectFromShortUrlController = wrapAsync(async (req, res) => {
 
     await incrementClicks(id);
 
+    // Read or create a visitor ID cookie for reliable unique-visitor tracking
+    let visitorId = req.cookies._vid;
+    if (!visitorId) {
+        visitorId = crypto.randomUUID();
+        res.cookie('_vid', visitorId, {
+            maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production'
+        });
+    }
+
     // Analytics
     await ClickModel.create({
         urlId: url._id,
         ip: normalizeIp(req.ip),
+        visitorId,
         deviceType: getDeviceType(req.headers["user-agent"])
     });
 

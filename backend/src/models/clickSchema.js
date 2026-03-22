@@ -12,6 +12,9 @@ const clickSchema = new Schema(
     ip: {
       type: String
     },
+    visitorId: {
+      type: String  // UUID cookie — reliable cross-request unique identifier
+    },
     deviceType: {
       type: String,
       enum: ["mobile", "desktop"],
