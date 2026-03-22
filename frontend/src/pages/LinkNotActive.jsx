@@ -9,16 +9,20 @@ const LinkNotActive = () => {
 
     const activationDate = activeFrom ? new Date(activeFrom) : null;
 
+    const redirected = React.useRef(false);
+
     React.useEffect(() => {
         if (!activationDate) return;
 
+        let interval;
+
         const checkTime = () => {
+            if (redirected.current) return; // already triggered, ignore further ticks
             if (new Date() >= activationDate) {
                 if (shortUrl) {
+                    redirected.current = true;   // set guard FIRST
+                    clearInterval(interval);      // stop polling immediately
                     window.location.href = shortUrl;
-                } else {
-                    // Fallback if no shortUrl provided, maybe just reload or go home
-                    // specific requirement was to redirect to the url
                 }
             }
         };
@@ -26,8 +30,8 @@ const LinkNotActive = () => {
         // Check immediately
         checkTime();
 
-        // Check every second
-        const interval = setInterval(checkTime, 1000);
+        // Poll every 2 seconds — backend will do the precise timing check anyway
+        interval = setInterval(checkTime, 2000);
 
         return () => clearInterval(interval);
     }, [activationDate, shortUrl]);
