@@ -589,7 +589,7 @@ const UserUrls = ({ itemsPerPage = 10, showExternalIcon = false, showStatsHeader
                         } else {
                           const rect = e.currentTarget.getBoundingClientRect();
                           setMoreActionsPos({
-                            top: rect.bottom + window.scrollY + 8,
+                            top: rect.bottom + 8,
                             right: window.innerWidth - rect.right,
                           });
                           setMoreActionsId(url._id);
