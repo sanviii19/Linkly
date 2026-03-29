@@ -19,8 +19,7 @@ const createShortUrlWithUserService = async (url, slug = null, userId, activeFro
     const exist = await getCustomShorturl(shortUrl);
     if (exist) throw new Error('Custom slug already exists');
 
-    const baseUrl = (process.env.BACKEND_URL || '').replace(/\/$/, '');
-    const fullShortUrl = `${baseUrl}/${String(shortUrl).replace(/^\/+/, '')}`;
+    const fullShortUrl = process.env.BACKEND_URL + '/' + shortUrl;
     const qrCode = await generateQRCode(fullShortUrl);
 
     await saveShortUrlToDB(url, shortUrl, userId, qrCode, activeFrom);
